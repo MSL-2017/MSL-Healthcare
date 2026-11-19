@@ -5,6 +5,7 @@ import Motion from "./motion";
 import { origin } from "./site";
 import "./globals.css";
 import "./design.css";
+import "./v2.css";
 
 export const metadata: Metadata = {
   metadataBase: new URL(origin),

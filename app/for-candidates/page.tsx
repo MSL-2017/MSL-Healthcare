@@ -19,7 +19,7 @@ export default function Candidates() {
         <article><h3>A choice of shifts</h3><p>Discuss ad hoc shifts, longer lines of work and block bookings with NHS trusts and private healthcare providers across the UK.</p></article>
         <article><h3>Weekly payroll</h3><p>Your consultant can discuss rates for your specialty and explain how weekly pay works.</p></article>
         <article><h3>Clinical guidance</h3><p>Our Clinical Lead Nurse can advise on training needs, appraisals and preparation for revalidation.</p></article>
-        <article><h3>Recommend a friend</h3><p>Earn £50 after your referral completes their first shift and a further £200 once they have worked 100 hours. <Link className="under" href="/contact">Ask for the referral terms</Link> before making a recommendation.</p></article>
+        <article><h3>Recommend a friend</h3><p>Earn £50 after your referral completes their first shift and a further £200 once they have worked 100 hours. <Link className="under" href="/recommend-a-friend">See the referral scheme</Link> before making a recommendation.</p></article>
       </div></div></section>
     <section className="agency"><div className="wrap duo"><div><p className="overline">Getting started</p><h2>From registration to your next shift</h2><p>We recruit registered healthcare professionals across disciplines including intensive care, A&amp;E and general nursing.</p><Link className="under" href="/healthcare-specialisms">View healthcare specialisms</Link></div>
       <ol className="steps list-decimal pl-6"><li><h3>Introduce yourself</h3><p><Link className="under" href="/register">Register your interest</Link> and tell us about your experience and availability.</p></li>

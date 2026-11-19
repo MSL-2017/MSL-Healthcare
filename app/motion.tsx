@@ -1,26 +1,54 @@
 "use client";
-import {usePathname} from "next/navigation";
-import {useEffect} from "react";
+import { useEffect } from "react";
+import { usePathname } from "next/navigation";
 
-export default function Motion(){
-  const path=usePathname();
-  useEffect(()=>{
-    const media=window.matchMedia('(prefers-reduced-motion: reduce)');
-    const observer=new IntersectionObserver(entries=>{
-      for(const entry of entries){
-        if(!entry.isIntersecting)continue;
-        const element=entry.target as HTMLElement;
-        if(!media.matches){
-          const image=element.matches('figure,.ed-photo');
-          element.animate(image ? [{clipPath:'inset(0 0 7% round 16px)',scale:'.985'},{clipPath:'inset(0 round 16px)',scale:'1'}] : [{opacity:.22,transform:'translateY(16px)'},{opacity:1,transform:'translateY(0)'}],
-            {duration:650,delay:Math.min(Array.from(element.parentElement?.children||[]).indexOf(element),3)*55,easing:'cubic-bezier(.2,.75,.22,1)',fill:'backwards'});
-        }
-        observer.unobserve(element);
+const targets = [
+  "h1", "h2", "article", "figure", ".lead", ".actions", ".steps li",
+  ".ed-photo", ".ed-rows > div", ".ed-sequence li", ".story p",
+  ".opportunity > div", ".resource-group h3",
+].map(selector => "main " + selector).join(",");
+
+export default function Motion() {
+  const path = usePathname();
+  useEffect(() => {
+    if (!("IntersectionObserver" in window)) return;
+    const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const active = new Set<Animation>();
+    const stopAnimations = () => {
+      for (const animation of active) animation.cancel();
+      active.clear();
+    };
+    const observer = new IntersectionObserver(entries => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        observer.unobserve(entry.target);
+        if (preference.matches) continue;
+
+        const element = entry.target;
+        const photo = element.matches("figure,.ed-photo");
+        const animated = photo ? element.querySelector("img") ?? element : element;
+        const frames = photo
+          ? [{ clipPath: "inset(8% 0 8% 0)", scale: ".97" }, { clipPath: "inset(0)", scale: "1" }]
+          : [{ opacity: .25, transform: "translateY(22px)" }, { opacity: 1, transform: "translateY(0)" }];
+        const position = Array.from(element.parentElement?.children ?? []).indexOf(element);
+        const animation = animated.animate(frames, {
+          duration: photo ? 790 : 620,
+          delay: Math.min(Math.max(position, 0), 3) * 65,
+          easing: "cubic-bezier(.2,.75,.22,1)",
+          fill: "backwards",
+        });
+        active.add(animation);
+        animation.onfinish = () => active.delete(animation);
       }
-    },{threshold:.06});
-    document.querySelectorAll('main h1,main h2,main article,main figure,main section > .lead,main .steps li,main .lead,main .actions,main .rule,main .ed-photo,main .ed-group,main .ed-rows > div,main .ed-sequence li').forEach(el=>observer.observe(el));
-    return ()=>observer.disconnect();
-  },[path]);
+    }, { threshold: .08 });
+
+    document.querySelectorAll(targets).forEach(element => observer.observe(element));
+    preference.addEventListener("change", stopAnimations);
+    return () => {
+      observer.disconnect();
+      preference.removeEventListener("change", stopAnimations);
+      stopAnimations();
+    };
+  }, [path]);
   return null;
 }
-

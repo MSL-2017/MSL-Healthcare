@@ -6,13 +6,13 @@ import path from "node:path";
 const base=process.env.PREVIEW_URL || "http://127.0.0.1:3016";
 const executablePath=process.env.CHROME_PATH || "C:/Program Files/Google/Chrome/Application/chrome.exe";
 const browser=await chromium.launch({executablePath,headless:true});
-const output=path.resolve("qa/output");
+const output=path.resolve(process.env.QA_OUTPUT || "qa/output");
 await fs.mkdir(output,{recursive:true});
 try {
  const context=await browser.newContext();
  const sitemap=await (await context.request.get(base+"/sitemap.xml")).text();
  const routes=[...sitemap.matchAll(/<loc>(.*?)<\/loc>/g)].map(match=>new URL(match[1]).pathname);
- assert.equal(routes.length,15);
+ assert.equal(routes.length,16);
  const errors=new Set(), localLinks=new Set(),visited=new Set();
  await context.addInitScript(()=>{window.__layoutShift=0;new PerformanceObserver(list=>{for(const entry of list.getEntries())if(!entry.hadRecentInput)window.__layoutShift+=entry.value}).observe({type:"layout-shift",buffered:true})});
  const page=await context.newPage();
@@ -37,27 +37,36 @@ try {
        if(href.startsWith("#"))assert.equal(await page.locator(href).count(),1,route+" missing anchor "+href);
        if(href.startsWith("/"))localLinks.add(href.split(/[?#]/)[0]);
      }
-     if(route==="/"||route==="/register"&&width===390){
+     if(process.env.QA_ALL_SCREENSHOTS || route==="/" || route==="/register"&&width===390){
        await page.waitForTimeout(900);
-       await page.screenshot({path:path.join(output,(route==="/"?"home":"register")+"-"+width+".png")});
+       await page.screenshot({path:path.join(output,(route==="/"?"home":route.slice(1))+"-"+width+".png")});
      }
      visited.add(route); console.log(width,route,"OK");
    }
  }
  for(const [legacy,newPath] of [["/Candidates","/for-candidates"],["/clients","/for-clients"],["/about-us","/about"],["/send-cv","/register"],["/compliance","/candidate-compliance"]]){const r=await context.request.get(base+legacy,{maxRedirects:0});assert.equal(r.status(),308);assert.equal(new URL(r.headers().location,base).pathname,newPath)}
  for(const href of localLinks){if(!visited.has(href))assert.equal((await context.request.get(base+href)).status(),200,href)}
+ await page.goto(base+"/candidate-compliance");
+ assert.equal(await page.getByRole("link",{name:/^Open .* PDF$/}).count(),10);
+ await page.getByRole("navigation",{name:"Resource categories"}).getByRole("link",{name:"During assignments"}).click();
+ await page.waitForURL("**#assignment-resources");
+ await page.goto(base+"/for-candidates");
+ await page.getByRole("link",{name:"See the referral scheme"}).click();
+ await page.waitForURL("**/recommend-a-friend");
  await page.goto(base);await page.locator(".smallNav summary").click();
  await page.locator(".smallNav").getByRole("link",{name:"Request staff",exact:true}).click();
  await page.waitForURL("**/request-staff");assert.equal(await page.locator(".smallNav").getAttribute("open"),null);
  await page.goto(base+"/healthcare-jobs");await page.getByLabel("Your nursing specialty").selectOption("A&E");await page.getByRole("button",{name:"Continue to registration"}).click();await page.waitForURL("**/register?**");assert.equal(await page.getByLabel("Specialism").inputValue(),"A&E");
- for(const route of ["/register","/contact","/request-staff"]){
+ for(const route of ["/register","/contact","/request-staff","/recommend-a-friend"]){
    await page.goto(base+route);const form=page.locator("form");
    const prepare=form.getByRole("button",{name:"Prepare email draft"});
    await prepare.click();
    assert.ok(await form.locator(":invalid").count()>0);
    await form.getByLabel("Full name").fill("QA Example");await form.getByLabel("Email address").fill("qa@example.com");
    if(route==="/request-staff")await form.getByLabel("Organisation").fill("Example organisation");
-   await form.locator('textarea[name="Message"]').fill("Local test only");await form.getByRole("checkbox").check();await prepare.click();
+   await form.locator('textarea[name="Message"]').fill("  ");await form.getByRole("checkbox").check();await prepare.click();
+   assert.equal(await form.locator('textarea[name="Message"]').evaluate(field=>field.validationMessage),"Enter a brief message.");
+   await form.locator('textarea[name="Message"]').fill("Local test only");await prepare.click();
    const draft=form.getByRole("link",{name:"Open email draft"});await draft.waitFor();
    assert.match(await draft.getAttribute("href"),/^mailto:info@mslhealthcare.co.uk\?/);
    await form.locator('textarea[name="Message"]').fill("Edited");assert.equal(await draft.count(),0);
@@ -71,7 +80,3 @@ try {
  assert.deepEqual([...errors],[]);
  console.log("PASS",routes.length,"routes at three viewports; local destinations, media, forms, menus, motion and browser errors checked.");
 } finally {await browser.close()}
-
-
-
-
