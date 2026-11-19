@@ -1,0 +1,26 @@
+.hero {background:#eaf4f7;padding-block:clamp(3rem,7vw,6rem);overflow:hidden}
+.hero h1,.dark h1,.jobs h1 {font-size:clamp(2.65rem,6vw,5.8rem);line-height:1.02;letter-spacing:-.055em;max-width:17ch;margin:0}
+.hero figure {margin:0;overflow:hidden;border-radius:1rem 4rem 1rem 1rem}
+.hero img {height:clamp(16rem,29vw,29rem);width:100%;object-fit:cover}
+.columns {display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(1.5rem,7vw,7rem);align-items:start}
+.rows {border-top:1px solid #adc3ce}
+.rows article,.rows li {padding:1.2rem 0;border-bottom:1px solid #cddce3}
+.rows h3 {margin:0;font-size:1.24rem}.rows p {margin:.35rem 0 0}
+.links {display:flex;flex-wrap:wrap;align-items:center;gap:1.25rem;margin-top:1.5rem}
+.callout {padding-block:clamp(3rem,5vw,5rem);background:#e7f4f8}
+.phone {display:block;font-size:clamp(1.75rem,4vw,3.35rem);font-weight:650;letter-spacing:-.05em}
+.dark {background:#123650;color:white;padding-block:clamp(3rem,7vw,6rem)}
+.dark p {color:#d6eaf4}.dark a {color:white}
+.documents {display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:2.5rem;margin-top:2rem}
+.documents a {display:flex;align-items:center;justify-content:space-between;gap:1rem;border-bottom:1px solid #b8ced7;padding:1rem .1rem;color:#125b84;font-weight:600}
+.documents a:hover {text-decoration:underline}.documents small {font-weight:500;color:#496575}
+.checklists {display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:2rem;margin-top:2rem}
+.checklists article {border-top:2px solid #3694b3;padding-top:.5rem}
+.checklists ul {padding-left:1.15rem;list-style:disc}.checklists li {margin:.8rem 0;line-height:1.5}
+.jobs {background:linear-gradient(120deg,#0c3e5f,#17567a);padding-block:clamp(3rem,7vw,6rem);color:white}
+.jobs p {color:#e3eff3}.jobs form {padding:clamp(1.5rem,4vw,3rem);border-radius:1.3rem;background:#fff;color:#143349;box-shadow:0 1rem 2rem #06284030}
+.jobs form h2 {font-size:clamp(1.6rem,3vw,2.4rem);margin-top:0}
+.jobs form label {display:block;font-weight:650;margin:1.5rem 0 .5rem}
+.jobs select {width:100%;appearance:auto;padding:.8rem .5rem;border:1px solid #9eb5c2;border-radius:.3rem;background:#f7fbfc}
+.jobs button {margin-top:1.2rem;cursor:pointer}
+@media(max-width:750px){.columns,.checklists,.documents{grid-template-columns:1fr}.hero figure{margin-top:1.5rem}.jobs form{margin-top:1rem}}
