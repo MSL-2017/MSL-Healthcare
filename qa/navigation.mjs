@@ -2,10 +2,11 @@ import {chromium} from "playwright-core";
 import assert from "node:assert/strict";
 import fs from "node:fs/promises";
 import path from "node:path";
+import {verifyScroll, verifyMobileMenu} from "./scroll.mjs";
 
 const base=process.env.PREVIEW_URL || "http://127.0.0.1:3016";
 const executablePath=process.env.CHROME_PATH || "C:/Program Files/Google/Chrome/Application/chrome.exe";
-const browser=await chromium.launch({executablePath,headless:true});
+const browser=await chromium.launch({executablePath,headless:true,args:["--disable-gpu"]});
 const output=path.resolve(process.env.QA_OUTPUT || "qa/output");
 await fs.mkdir(output,{recursive:true});
 try {
@@ -18,7 +19,7 @@ try {
  const page=await context.newPage();
  page.on("pageerror",e=>errors.add(String(e)));
  page.on("console",m=>{if(m.type()==="error")errors.add(m.text())});
- for(const width of [1440,768,390]){
+ for(const width of [1440,1024,768,430,390,375,320]){
    await page.setViewportSize({width,height:900});
    for(const route of routes){
      const response=await page.goto(base+route);
@@ -53,15 +54,19 @@ try {
  await page.goto(base+"/for-candidates");
  await page.getByRole("link",{name:"See the referral scheme"}).click();
  await page.waitForURL("**/recommend-a-friend");
- await page.goto(base);await page.locator(".smallNav summary").click();
+ await page.goto(base);await page.locator(".smallNav > summary").click();
+ await page.locator(".mobileGroup > summary").last().click();
  await page.locator(".smallNav").getByRole("link",{name:"Request staff",exact:true}).click();
  await page.waitForURL("**/request-staff");assert.equal(await page.locator(".smallNav").getAttribute("open"),null);
  await page.goto(base+"/healthcare-jobs");await page.getByLabel("Your nursing specialty").selectOption("A&E");await page.getByRole("button",{name:"Continue to registration"}).click();await page.waitForURL("**/register?**");assert.equal(await page.getByLabel("Specialism").inputValue(),"A&E");
+ await page.setViewportSize({width:320,height:520});
  for(const route of ["/register","/contact","/request-staff","/recommend-a-friend"]){
    await page.goto(base+route);const form=page.locator("form");
    const prepare=form.getByRole("button",{name:"Prepare email draft"});
    await prepare.click();
    assert.ok(await form.locator(":invalid").count()>0);
+   await form.getByLabel("Full name").focus();
+   assert.ok(await form.evaluate(element => element.getBoundingClientRect().right <= innerWidth));
    await form.getByLabel("Full name").fill("QA Example");await form.getByLabel("Email address").fill("qa@example.com");
    if(route==="/request-staff")await form.getByLabel("Organisation").fill("Example organisation");
    await form.locator('textarea[name="Message"]').fill("  ");await form.getByRole("checkbox").check();await prepare.click();
@@ -77,6 +82,11 @@ try {
  await page.locator(".serviceGallery").scrollIntoViewIfNeeded();await page.waitForTimeout(600);assert.ok(await page.evaluate(()=>window.__reveals)>0);
  await page.emulateMedia({reducedMotion:"reduce"});await page.goto(base);await page.locator(".serviceGallery").scrollIntoViewIfNeeded();
  assert.equal(await page.evaluate(()=>document.getAnimations().filter(a=>a.playState==="running").length),0);
+ await page.emulateMedia({reducedMotion:"no-preference"});
+ await verifyScroll(page, base);
+ const mobile = await browser.newContext({ viewport:{width:320,height:568}, isMobile:true, hasTouch:true });
+ await verifyMobileMenu(await mobile.newPage(), base, routes, output);
+ await mobile.close();
  assert.deepEqual([...errors],[]);
- console.log("PASS",routes.length,"routes at three viewports; local destinations, media, forms, menus, motion and browser errors checked.");
+ console.log("PASS",routes.length,"routes at seven viewports; local destinations, media, forms, menus, motion and browser errors checked.");
 } finally {await browser.close()}

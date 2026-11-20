@@ -13,6 +13,7 @@ export default function Motion() {
   useEffect(() => {
     if (!("IntersectionObserver" in window)) return;
     const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const compact = window.matchMedia("(max-width: 940px)").matches;
     const active = new Set<Animation>();
     const stopAnimations = () => {
       for (const animation of active) animation.cancel();
@@ -29,10 +30,10 @@ export default function Motion() {
         const animated = photo ? element.querySelector("img") ?? element : element;
         const frames = photo
           ? [{ clipPath: "inset(8% 0 8% 0)", scale: ".97" }, { clipPath: "inset(0)", scale: "1" }]
-          : [{ opacity: .25, transform: "translateY(22px)" }, { opacity: 1, transform: "translateY(0)" }];
+          : [{ opacity: .25, transform: compact ? "translateY(10px)" : "translateY(22px)" }, { opacity: 1, transform: "translateY(0)" }];
         const position = Array.from(element.parentElement?.children ?? []).indexOf(element);
         const animation = animated.animate(frames, {
-          duration: photo ? 790 : 620,
+          duration: compact ? 360 : photo ? 790 : 620,
           delay: Math.min(Math.max(position, 0), 3) * 65,
           easing: "cubic-bezier(.2,.75,.22,1)",
           fill: "backwards",
@@ -42,7 +43,10 @@ export default function Motion() {
       }
     }, { threshold: .08 });
 
-    document.querySelectorAll(targets).forEach(element => observer.observe(element));
+    const hero = document.querySelector(".route-page > :first-child");
+    document.querySelectorAll(targets).forEach(element => {
+      if (!hero?.contains(element)) observer.observe(element);
+    });
     preference.addEventListener("change", stopAnimations);
     return () => {
       observer.disconnect();

@@ -19,7 +19,7 @@ export default function Compliance() {
       <p className="lead">Our compliance team can help you gather your evidence and explain which checks apply to your role.</p>
       <div className={s.links}><a href="#checklist" className="under">Document checklist</a><a href="#forms" className="under">Forms and handbook</a></div>
     </div></section>
-    <section id="checklist" className="wrap section scroll-mt-28"><p className="overline">Before you start</p><h2>Your compliance checklist</h2>
+    <section id="checklist" className="wrap section"><p className="overline">Before you start</p><h2>Your compliance checklist</h2>
       <div className={s.checklists}>{requirements.map(group=><article key={group.title}><h3>{group.title}</h3><ul>{group.items.map(item=><li key={item}>{item}</li>)}</ul></article>)}</div>
       <p>Ask your consultant how to provide completed forms, identification and health records securely.</p>
     </section>

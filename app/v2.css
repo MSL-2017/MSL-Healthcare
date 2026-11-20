@@ -58,3 +58,98 @@ details[open] > summary::after { transform: rotate(225deg); }
 @media (prefers-reduced-motion:reduce) {
   .btn:hover { transform: none; }
 }
+
+@media (max-width: 940px) {
+  html:has(.smallNav[open]) { overflow: hidden; }
+  .bar { backdrop-filter: blur(6px); }
+  .smallNav > summary {
+    display: flex;
+    align-items: center;
+    gap: .45rem;
+    min-width: 44px;
+    min-height: 44px;
+    padding-inline: .4rem;
+  }
+  .smallNav > summary::after { display: none; }
+  .menuIcon {
+    position: relative;
+    display: inline-block;
+    width: 18px;
+    height: 14px;
+    border-block: 2px solid currentColor;
+  }
+  .menuIcon::before {
+    content: "";
+    position: absolute;
+    inset: 50% 0 auto;
+    border-top: 2px solid currentColor;
+    transform: translateY(-50%);
+  }
+  .smallNav[open] .menuIcon { border-color: transparent; }
+  .smallNav[open] .menuIcon::before { transform: translateY(-50%) rotate(45deg); }
+  .smallNav[open] .menuIcon::after {
+    content: "";
+    position: absolute;
+    inset: 50% 0 auto;
+    border-top: 2px solid currentColor;
+    transform: translateY(-50%) rotate(-45deg);
+  }
+  .smallNav nav {
+    background: #faffff;
+    backdrop-filter: none;
+    max-height: min(72dvh, calc(100dvh - 110px));
+    padding: .5rem;
+    overscroll-behavior: contain;
+    animation: none;
+  }
+  .smallNav nav a, .mobileGroup > summary {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    min-height: 44px;
+    padding: .55rem .75rem;
+  }
+  .mobileGroup { border-block-start: 1px solid var(--line); }
+  .mobileGroup > div {
+    margin-inline: .75rem;
+    padding-inline-start: .3rem;
+    border-inline-start: 2px solid #d7e8f2;
+  }
+  .quick { min-height: 44px; }
+  .btn { min-height: 44px; }
+  .enquiry :is(input:not([type="checkbox"]), select, textarea) { min-height: 44px; font-size: 1rem; }
+  .enquiry .check { align-items: flex-start; min-height: 44px; cursor: pointer; }
+  .enquiry .check input { flex: 0 0 auto; margin-top: .25rem; }
+}
+
+@media (max-width: 940px) and (prefers-reduced-motion: no-preference) {
+  .smallNav[open] nav { animation: appear .18s ease-out; }
+  @supports (transition-behavior: allow-discrete) {
+    .smallNav nav {
+      opacity: 0;
+      transform: translateY(-5px);
+      transition: opacity .18s ease, transform .18s ease;
+    }
+    .smallNav[open] nav { opacity: 1; transform: none; animation: none; }
+    .smallNav::details-content { transition: content-visibility .18s allow-discrete; }
+  }
+}
+
+@media (max-width: 380px) {
+  .bar { padding-inline: 9px; gap: 7px; }
+  .bar .brand { width: clamp(92px, 28vw, 106px); }
+  .quick { padding-inline: .55rem; white-space: nowrap; }
+  .smallNav > summary { gap: .35rem; padding-inline: .2rem; font-size: .92rem; }
+  .hero .actions .btn { padding-inline: 1rem; }
+}
+
+@media (max-width: 768px) {
+  .enquiryLayout { grid-template-columns: minmax(0, 1fr); gap: 1.5rem; }
+  .contactIntro { position: static; }
+}
+
+@media (max-width: 700px) {
+  .section, .agency { padding-block: clamp(2.5rem, 9vw, 3.75rem); }
+  .portrait img { object-position: 65% 53%; }
+  .footerLinks a { overflow-wrap: anywhere; }
+}
