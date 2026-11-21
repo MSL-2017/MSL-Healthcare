@@ -1,0 +1,88 @@
+.mast:has(+ main .homeHero) {
+  background: transparent;
+}
+
+.homeHero.hero {
+  position: relative;
+  isolation: isolate;
+  overflow: visible;
+  background: none;
+}
+
+.homeHero::before {
+  content: "";
+  position: absolute;
+  inset: -112px 0 0;
+  z-index: -1;
+  background: radial-gradient(ellipse at 75% 26%, #bfdfed, transparent 66%),
+    linear-gradient(128deg, #f9fdff 10%, #e5f3f9 90%);
+}
+
+.route-page > .homeHero:first-child { animation: none; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .homeHero .heroGrid { animation: route-enter 320ms ease-out; }
+}
+
+.heroSlides {
+  position: absolute;
+  inset: 0;
+  isolation: isolate;
+  overflow: hidden;
+  border-radius: inherit;
+  background: #d2e7f0;
+}
+
+.homeHero .heroCarousel { border-radius: 7rem 1.15rem 7rem 1.15rem; }
+.homeHero .heroSlide {
+  border-radius: 0;
+  object-fit: cover;
+  object-position: 50% 38%;
+  opacity: 0;
+  animation: none;
+  transition: opacity 0s .6s;
+}
+.homeHero .heroSlide:last-child { object-position: 55% center; }
+.homeHero .heroSlide[data-active="true"] {
+  z-index: 1;
+  opacity: 1;
+  transition: opacity .6s ease-in-out;
+}
+
+.heroCarousel figcaption { z-index: 2; }
+.heroPlayback {
+  position: absolute;
+  z-index: 2;
+  display: grid;
+  place-items: center;
+  inset: 12px 12px auto auto;
+  width: 44px;
+  height: 44px;
+  border: 1px solid #ffffff80;
+  border-radius: 50%;
+  background: #102f49d9;
+  color: white;
+  cursor: pointer;
+}
+.heroPlayback:hover { background: #102f49; }
+.pauseIcon { width: 10px; height: 13px; border-inline: 3px solid; }
+.playIcon { margin-left: 2px; border: 7px solid transparent; border-right: 0; border-left: 10px solid; }
+
+.audiences { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.audiences article { display: flex; flex-direction: column; }
+.audiences article > div { display: flex; flex: 1; flex-direction: column; align-items: flex-start; }
+.audiences .under { margin-top: auto; }
+.cardPhoto { position: relative; overflow: hidden; margin: 0; }
+.audiences .cardPhoto { aspect-ratio: 2; }
+.serviceGallery .cardPhoto { aspect-ratio: 1.9; border-radius: 9px; }
+.audiences .cardPhoto img, .serviceGallery .cardPhoto img { height: 100%; object-fit: cover; }
+.audiences article:first-child img { object-position: 50% 40%; }
+.audiences article:nth-child(2) img { object-position: 57% 52%; }
+.serviceGallery article:nth-child(2) img { object-position: 50% 24%; }
+.serviceGallery article:nth-child(3) img { object-position: 50% 41%; }
+
+@media (max-width: 700px) {
+  .homeHero .heroCarousel { border-radius: 3.5rem .9rem 3.5rem .9rem; }
+  .audiences { grid-template-columns: minmax(0, 1fr); }
+  .audiences .cardPhoto { aspect-ratio: 1.65; }
+}

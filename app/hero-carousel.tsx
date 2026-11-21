@@ -1,0 +1,79 @@
+"use client";
+
+import Image from "next/image";
+import { useEffect, useState } from "react";
+
+const slides = [
+  { src: "/hero-hospital-nurse.webp", alt: "A nurse in green scrubs in a hospital corridor" },
+  { src: "/hero-clinical-team.webp", alt: "Two nurses in green scrubs standing together in a clinical setting" },
+  { src: "/hero-patient-care.webp", alt: "A nurse in blue scrubs holding a patient's hand at the bedside" },
+];
+const interval = 2_000;
+
+export default function HeroCarousel() {
+  const [active, setActive] = useState(0);
+  const [ready, setReady] = useState<string[]>([]);
+  const [hovered, setHovered] = useState(false);
+  const [paused, setPaused] = useState(false);
+  const [motionAllowed, setMotionAllowed] = useState(false);
+  const [visible, setVisible] = useState(false);
+  const next = (active + 1) % slides.length;
+  const nextReady = ready.includes(slides[next].src);
+
+  useEffect(() => {
+    const preference = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const syncMotion = () => setMotionAllowed(!preference.matches);
+    const syncVisibility = () => setVisible(!document.hidden);
+    syncMotion();
+    syncVisibility();
+    preference.addEventListener("change", syncMotion);
+    document.addEventListener("visibilitychange", syncVisibility);
+    return () => {
+      preference.removeEventListener("change", syncMotion);
+      document.removeEventListener("visibilitychange", syncVisibility);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!motionAllowed || !visible || hovered || paused || !nextReady) return;
+    const timer = window.setTimeout(() => setActive(next), interval);
+    return () => window.clearTimeout(timer);
+  }, [hovered, motionAllowed, next, nextReady, paused, visible]);
+
+  return (
+    <figure
+      className="portrait heroCarousel"
+      onPointerEnter={event => { if (event.pointerType === "mouse") setHovered(true); }}
+      onPointerLeave={() => setHovered(false)}
+    >
+      <div className="heroSlides">
+        {slides.map((slide, index) => (
+          <Image
+            key={slide.src}
+            src={slide.src}
+            alt={slide.alt}
+            aria-hidden={index !== active}
+            className="heroSlide"
+            data-active={index === active}
+            fill
+            sizes="(max-width: 700px) 84vw, (max-width: 1384px) 44vw, 604px"
+            preload={index === 0}
+            onLoad={() => setReady(current => current.includes(slide.src) ? current : [...current, slide.src])}
+          />
+        ))}
+      </div>
+      <figcaption><b>24/7</b> Consultant support</figcaption>
+      {motionAllowed && (
+        <button
+          type="button"
+          className="heroPlayback"
+          aria-label={paused ? "Play hero slideshow" : "Pause hero slideshow"}
+          title={paused ? "Play slideshow" : "Pause slideshow"}
+          onClick={() => setPaused(value => !value)}
+        >
+          <span aria-hidden="true" className={paused ? "playIcon" : "pauseIcon"}/>
+        </button>
+      )}
+    </figure>
+  );
+}

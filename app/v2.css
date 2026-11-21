@@ -1,7 +1,7 @@
 /* Editorial refinements shared by the homepage and the recruitment journeys. */
 :root { --navy: #0b2c48; --ink: #102f49; --blue: #005b95; }
 .mast { padding-block: 12px; }
-.bar { border-radius: 20px; background: rgba(249,253,255,.9); box-shadow: 0 12px 36px #11395017; }
+.bar { border-radius: 20px; background: rgba(249,253,255,.84); box-shadow: 0 8px 28px #11395018; }
 .largeNav summary, .smallNav summary { list-style: none; }
 .largeNav summary::after, .smallNav summary::after {
   content: "";
@@ -26,7 +26,6 @@ details[open] > summary::after { transform: rotate(225deg); }
 .portrait figcaption { bottom: 1.65rem; left: -.85rem; }
 .credentials { min-height: 84px; }
 .audiences article { border-radius: 20px 20px 32px 20px; transition: box-shadow .25s, border-color .25s; }
-.audiences article:nth-child(2) { margin-top: 2.75rem; }
 .audiences article:hover, .serviceGallery article:hover { border-color: #78adc5; box-shadow: 0 14px 35px #15496120; }
 .serviceGallery article { background: #f9fdff; transition: box-shadow .25s, border-color .25s; }
 .serviceGallery article:nth-child(1) img { object-position: center 55%; }
@@ -52,7 +51,6 @@ details[open] > summary::after { transform: rotate(225deg); }
   .intro h1 { font-size: clamp(2.7rem,9.8vw,4rem); }
   .portrait img, .portrait::before { border-radius: 3.5rem .9rem 3.5rem .9rem; }
   .portrait figcaption { left: .5rem; bottom: .5rem; }
-  .audiences article:nth-child(2) { margin-top: 0; }
   .opportunity > div:nth-child(2) { border-left: 0; border-top: 1px solid #bed3df; padding: 1.5rem 0 0; }
 }
 @media (prefers-reduced-motion:reduce) {
