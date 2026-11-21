@@ -60,9 +60,9 @@
 }
 
 .heroCarousel figcaption { z-index: 2; }
-.heroPhotoCredit {
+.homePhotoCredit {
   display: block;
-  margin: .55rem auto 0;
+  margin-bottom: 1.5rem;
   color: #405967;
   font-size: .72rem;
   line-height: 1.35;
@@ -85,8 +85,4 @@
   .homeHero .heroCarousel { border-radius: 3.5rem .9rem 3.5rem .9rem; }
   .audiences { grid-template-columns: minmax(0, 1fr); }
   .audiences .cardPhoto { aspect-ratio: 1.65; }
-}
-
-@media (max-width: 640px) {
-  .heroPhotoCredit { width: 94%; }
 }

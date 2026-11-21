@@ -78,9 +78,8 @@ try {
       document.querySelector(".mast .bar").getBoundingClientRect().bottom);
     assert.equal(overlaps, false);
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1));
-    assert.ok(await page.evaluate(() =>
-      document.querySelector(".heroPhotoCredit").getBoundingClientRect().bottom <
-      document.querySelector(".credentials").getBoundingClientRect().top));
+    assert.equal(await page.locator(".homeHero").getByText(/Photos: Anthony Clingerman/).count(), 0);
+    assert.ok(await page.locator(".finalCTA + .homePhotoCredit").isVisible());
     const heading = page.locator(".homeHero h1");
     assert.equal(await heading.textContent(), "Healthcare staffing, built around people.");
     if (width >= 1024) {

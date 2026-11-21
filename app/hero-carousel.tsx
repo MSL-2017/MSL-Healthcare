@@ -64,10 +64,6 @@ export default function HeroCarousel() {
         </div>
         <figcaption><b>24/7</b> Consultant support</figcaption>
       </figure>
-      <small className="heroPhotoCredit">
-        Photos: Anthony Clingerman and Jacob Wood, U.S. Air Force.
-        The appearance of U.S. Department of War visual information does not imply or constitute Department of War endorsement.
-      </small>
     </div>
   );
 }

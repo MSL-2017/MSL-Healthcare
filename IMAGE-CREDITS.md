@@ -14,7 +14,7 @@ The photographs illustrate clinical work and settings. People and locations pict
 
 ### Homepage carousel and staffing gallery
 
-The carousel uses documentary photographs by Anthony Clingerman and Jacob Wood, U.S. Air Force, from West Suffolk Hospital and RAF Lakenheath in Suffolk, England. DVIDS identifies the photographs as public-domain U.S. government works and authorises commercial use subject to its published conditions. The carousel displays the required non-endorsement notice. The images were resized to 1920px wide, converted to WebP and framed with CSS. [DVIDS commercial-use terms](https://www.dvidshub.net/about/copyright)
+The carousel uses documentary photographs by Anthony Clingerman and Jacob Wood, U.S. Air Force, from West Suffolk Hospital and RAF Lakenheath in Suffolk, England. DVIDS identifies the photographs as public-domain U.S. government works and authorises commercial use subject to its published conditions. The required non-endorsement notice appears below the final homepage call to action. The images were resized to 1920px wide, converted to WebP and framed with CSS. [DVIDS commercial-use terms](https://www.dvidshub.net/about/copyright)
 
 | Local file | UK setting | Original source |
 | --- | --- | --- |

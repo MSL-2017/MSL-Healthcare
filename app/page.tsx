@@ -30,5 +30,9 @@ export default function Home(){
    <div><p className="overline">Agency careers</p><h2>Work for MSL</h2><p>Interested in the work behind each placement? Get in touch about a career with our healthcare recruitment team.</p><Link className="under" href="/work-for-msl">Explore agency careers</Link></div>
  </section>
  <section className="wrap finalCTA"><h2>Ready to work with MSL Healthcare?</h2><div className="actions"><Link href="/register" className="btn">Register with MSL</Link><Link href="/request-staff" className="btn outline">Request staff</Link></div></section>
+ <small className="wrap homePhotoCredit">
+   Photos: Anthony Clingerman and Jacob Wood, U.S. Air Force.
+   The appearance of U.S. Department of War visual information does not imply or constitute Department of War endorsement.
+ </small>
  </>
 }
