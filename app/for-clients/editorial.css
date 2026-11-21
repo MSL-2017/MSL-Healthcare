@@ -32,7 +32,7 @@
 .ed-sequence li { border-top: 2px solid #3e829e; padding-top: 12px; }
 .ed-sequence h3 { margin: 0; }
 .ed-directory { display: grid; grid-template-columns: minmax(240px, .65fr) 1.35fr; align-items: start; gap: clamp(32px, 7vw, 110px); }
-.ed-directory aside { position: sticky; top: 125px; }
+.ed-directory aside { position: sticky; top: max(125px, var(--mast-clearance, 112px)); }
 .ed-rows { margin: 0; }
 .ed-rows > div { padding: 22px 0; border-top: 1px solid #acc6d3; }
 .ed-rows dt { font-size: 1.22rem; font-weight: 680; color: #163b56; }

@@ -4,9 +4,9 @@ import Image from "next/image";
 import { useEffect, useState } from "react";
 
 const slides = [
-  { src: "/hero-hospital-nurse.webp", alt: "A nurse in green scrubs in a hospital corridor" },
-  { src: "/hero-clinical-team.webp", alt: "Two nurses in green scrubs standing together in a clinical setting" },
-  { src: "/hero-patient-care.webp", alt: "A nurse in blue scrubs holding a patient's hand at the bedside" },
+  { src: "/uk-hospital-tour.webp", alt: "A staff member leads a nursing recruitment tour at West Suffolk Hospital in England" },
+  { src: "/uk-nursing-discussion.webp", alt: "Participants take part in a nursing recruitment discussion at West Suffolk Hospital" },
+  { src: "/uk-clinical-assessment.webp", alt: "Clinicians in scrubs assess a volunteer patient during a training exercise at RAF Lakenheath in Suffolk" },
 ];
 const interval = 2_000;
 
@@ -40,28 +40,34 @@ export default function HeroCarousel() {
   }, [hovered, motionAllowed, next, nextReady, visible]);
 
   return (
-    <figure
-      className="portrait heroCarousel"
-      onPointerEnter={event => { if (event.pointerType === "mouse") setHovered(true); }}
-      onPointerLeave={() => setHovered(false)}
-    >
-      <div className="heroSlides">
-        {slides.map((slide, index) => (
-          <Image
-            key={slide.src}
-            src={slide.src}
-            alt={slide.alt}
-            aria-hidden={index !== active}
-            className="heroSlide"
-            data-active={index === active}
-            fill
-            sizes="(max-width: 700px) 84vw, (max-width: 1384px) 44vw, 604px"
-            preload={index === 0}
-            onLoad={() => setReady(current => current.includes(slide.src) ? current : [...current, slide.src])}
-          />
-        ))}
-      </div>
-      <figcaption><b>24/7</b> Consultant support</figcaption>
-    </figure>
+    <div className="heroVisual">
+      <figure
+        className="portrait heroCarousel"
+        onPointerEnter={event => { if (event.pointerType === "mouse") setHovered(true); }}
+        onPointerLeave={() => setHovered(false)}
+      >
+        <div className="heroSlides">
+          {slides.map((slide, index) => (
+            <Image
+              key={slide.src}
+              src={slide.src}
+              alt={slide.alt}
+              aria-hidden={index !== active}
+              className="heroSlide"
+              data-active={index === active}
+              fill
+              sizes="(max-width: 700px) 84vw, (max-width: 1384px) 41vw, 562px"
+              preload={index === 0}
+              onLoad={() => setReady(current => current.includes(slide.src) ? current : [...current, slide.src])}
+            />
+          ))}
+        </div>
+        <figcaption><b>24/7</b> Consultant support</figcaption>
+      </figure>
+      <small className="heroPhotoCredit">
+        Photos: Anthony Clingerman and Jacob Wood, U.S. Air Force.
+        The appearance of U.S. Department of War visual information does not imply or constitute Department of War endorsement.
+      </small>
+    </div>
   );
 }

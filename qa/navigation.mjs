@@ -2,7 +2,7 @@ import {chromium} from "playwright-core";
 import assert from "node:assert/strict";
 import fs from "node:fs/promises";
 import path from "node:path";
-import {verifyScroll, verifyMobileMenu} from "./scroll.mjs";
+import {verifyScroll, verifyMobileMenu, verifyStickyClearance} from "./scroll.mjs";
 
 const base=process.env.PREVIEW_URL || "http://127.0.0.1:3016";
 const executablePath=process.env.CHROME_PATH || "C:/Program Files/Google/Chrome/Application/chrome.exe";
@@ -84,6 +84,7 @@ try {
  assert.equal(await page.evaluate(()=>document.getAnimations().filter(a=>a.playState==="running").length),0);
  await page.emulateMedia({reducedMotion:"no-preference"});
  await verifyScroll(page, base);
+ await verifyStickyClearance(page, base);
  const mobile = await browser.newContext({ viewport:{width:320,height:568}, isMobile:true, hasTouch:true });
  await verifyMobileMenu(await mobile.newPage(), base, routes, output);
  await mobile.close();

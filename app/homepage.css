@@ -12,13 +12,21 @@
 .homeHero::before {
   content: "";
   position: absolute;
-  inset: -112px 0 0;
+  inset: calc(-1 * var(--mast-clearance, max(112px, 7rem))) 0 0;
   z-index: -1;
   background: radial-gradient(ellipse at 75% 26%, #bfdfed, transparent 66%),
     linear-gradient(128deg, #f9fdff 10%, #e5f3f9 90%);
 }
 
 .route-page > .homeHero:first-child { animation: none; }
+
+.homeHero .intro h1 { text-wrap: balance; }
+.homeHero .intro h1 em { display: block; }
+
+@media (min-width: 701px) {
+  .homeHero .heroGrid { grid-template-columns: minmax(0, 1.13fr) minmax(0, 1fr); gap: 3%; }
+  .homeHero .intro h1 { font-size: clamp(2.125rem, 4.45vw, 4.25rem); }
+}
 
 @media (prefers-reduced-motion: no-preference) {
   .homeHero .heroGrid { animation: route-enter 320ms ease-out; }
@@ -33,16 +41,18 @@
   background: #d2e7f0;
 }
 
-.homeHero .heroCarousel { border-radius: 7rem 1.15rem 7rem 1.15rem; }
+.heroVisual { min-width: 0; }
+.homeHero .heroCarousel { margin-inline: auto; border-radius: 7rem 1.15rem 7rem 1.15rem; }
 .homeHero .heroSlide {
   border-radius: 0;
   object-fit: cover;
-  object-position: 50% 38%;
+  object-position: 58% 42%;
   opacity: 0;
   animation: none;
   transition: opacity 0s .6s;
 }
-.homeHero .heroSlide:last-child { object-position: 55% center; }
+.homeHero .heroSlide:nth-child(2) { object-position: 42% 40%; }
+.homeHero .heroSlide:last-child { object-position: 60% 42%; }
 .homeHero .heroSlide[data-active="true"] {
   z-index: 1;
   opacity: 1;
@@ -50,6 +60,13 @@
 }
 
 .heroCarousel figcaption { z-index: 2; }
+.heroPhotoCredit {
+  display: block;
+  margin: .55rem auto 0;
+  color: #405967;
+  font-size: .72rem;
+  line-height: 1.35;
+}
 
 .audiences { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 .audiences article { display: flex; flex-direction: column; }
@@ -68,4 +85,8 @@
   .homeHero .heroCarousel { border-radius: 3.5rem .9rem 3.5rem .9rem; }
   .audiences { grid-template-columns: minmax(0, 1fr); }
   .audiences .cardPhoto { aspect-ratio: 1.65; }
+}
+
+@media (max-width: 640px) {
+  .heroPhotoCredit { width: 94%; }
 }

@@ -16,6 +16,9 @@ try {
   await page.goto(base);
 
   const hero = page.locator(".heroSlides");
+  const slidePaths = await hero.locator("img").evaluateAll(nodes =>
+    nodes.map(node => new URL(node.src).searchParams.get("url")));
+  assert.deepEqual(slidePaths, ["/uk-hospital-tour.webp", "/uk-nursing-discussion.webp", "/uk-clinical-assessment.webp"]);
   const current = () => hero.locator('[data-active="true"]');
   const currentImage = () => current().getAttribute("src");
   const nextImage = previous => page.waitForFunction(src =>
@@ -67,7 +70,7 @@ try {
   assert.equal(new Set(sources).size, 8);
 
   if (output) await fs.mkdir(output, { recursive: true });
-  for (const width of [1440, 768, 390, 320]) {
+  for (const width of [1440, 1024, 768, 390, 320]) {
     await page.setViewportSize({ width, height: 900 });
     await page.goto(base);
     const overlaps = await page.evaluate(() =>
@@ -75,6 +78,16 @@ try {
       document.querySelector(".mast .bar").getBoundingClientRect().bottom);
     assert.equal(overlaps, false);
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1));
+    assert.ok(await page.evaluate(() =>
+      document.querySelector(".heroPhotoCredit").getBoundingClientRect().bottom <
+      document.querySelector(".credentials").getBoundingClientRect().top));
+    const heading = page.locator(".homeHero h1");
+    assert.equal(await heading.textContent(), "Healthcare staffing, built around people.");
+    if (width >= 1024) {
+      const lines = await heading.evaluate(element =>
+        Math.round(element.getBoundingClientRect().height / parseFloat(getComputedStyle(element).lineHeight)));
+      assert.equal(lines, 2, `Desktop hero must use two lines at ${width}px`);
+    }
 
     const measurements = await page.locator(".audiences article, .audiences .cardPhoto, .audiences .under, .serviceGallery .cardPhoto")
       .evaluateAll(nodes => nodes.map(node => {
@@ -105,6 +118,36 @@ try {
     }
     console.log(width, "hero, header and image alignment verified");
   }
+
+  const touchPage = await browser.newPage({ viewport: { width: 390, height: 900 }, isMobile: true, hasTouch: true, reducedMotion: "reduce" });
+  for (const device of [page, touchPage]) {
+    const touch = device === touchPage;
+    if (!touch) await device.setViewportSize({ width: 1440, height: 900 });
+    for (const [label, destination, heading] of [
+      ["Register with MSL", "/register", "Register with MSL"],
+      ["Request staff", "/request-staff", "Request healthcare staff"],
+    ]) {
+      await device.goto(base);
+      const cta = device.locator(".finalCTA").getByRole("link", { name: label, exact: true });
+      assert.equal(await cta.getAttribute("href"), destination);
+      if (!touch) {
+        await cta.hover();
+        await cta.focus();
+      }
+      const colors = await cta.evaluate(element => {
+        const { color, backgroundColor } = getComputedStyle(element);
+        return { color, backgroundColor };
+      });
+      assert.notEqual(colors.color, colors.backgroundColor, `${label} must remain visible`);
+      if (touch) await cta.tap();
+      else await cta.press("Enter");
+      await device.waitForURL(base + destination);
+      assert.equal(await device.locator("main h1").innerText(), heading);
+      assert.ok(await device.locator("main form").isVisible());
+    }
+  }
+  await touchPage.close();
+  console.log("Both bottom CTAs verified by keyboard and mobile touch.");
   assert.deepEqual(errors, []);
   console.log("PASS: 3-slide loop, 2s cadence, crossfade, no buttons, no carousel layout shift, hover, visibility, reduced motion and unique photos.");
 } finally {

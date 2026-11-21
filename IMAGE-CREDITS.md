@@ -14,7 +14,15 @@ The photographs illustrate clinical work and settings. People and locations pict
 
 ### Homepage carousel and staffing gallery
 
-These optimised WebP assets are covered by the [Pexels License](https://www.pexels.com/license/), which permits commercial website use. The corridor portrait was cropped for a landscape presentation. The photographers' pages do not establish UK locations for these images.
+The carousel uses documentary photographs by Anthony Clingerman and Jacob Wood, U.S. Air Force, from West Suffolk Hospital and RAF Lakenheath in Suffolk, England. DVIDS identifies the photographs as public-domain U.S. government works and authorises commercial use subject to its published conditions. The carousel displays the required non-endorsement notice. The images were resized to 1920px wide, converted to WebP and framed with CSS. [DVIDS commercial-use terms](https://www.dvidshub.net/about/copyright)
+
+| Local file | UK setting | Original source |
+| --- | --- | --- |
+| `public/uk-hospital-tour.webp` | Nursing recruitment tour, West Suffolk Hospital | [DVIDS photo 5871516](https://www.dvidshub.net/image/5871516/liberty-wing-spouses-attend-hospital-tour-part-nurse-recruitment-event-west-suffolk-hospital-england-oct) |
+| `public/uk-nursing-discussion.webp` | Recruitment group discussion, West Suffolk Hospital | [DVIDS photo 5871518](https://www.dvidshub.net/image/5871518/liberty-wing-spouses-participate-group-discussion-part-nurse-recruitment-event-west-suffolk-hospital-england) |
+| `public/uk-clinical-assessment.webp` | Clinicians assess a volunteer patient during a training exercise at RAF Lakenheath | [DVIDS photo 6616041](https://www.dvidshub.net/image/6616041/48mdg-expands-capabilities-during-exercise-agile-liberty) |
+
+The staffing gallery and previous carousel assets below are covered by the [Pexels License](https://www.pexels.com/license/). The photographers' pages do not establish UK locations for these images.
 
 | Local file | Subject | Photographer and original asset |
 | --- | --- | --- |

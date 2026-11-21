@@ -4,7 +4,7 @@
   align-items: start;
   gap: clamp(2rem,6vw,6rem);
 }
-.resource-index { position: sticky; top: 120px; }
+.resource-index { position: sticky; top: max(120px, var(--mast-clearance, 112px)); }
 .resource-index nav { display: grid; gap: .65rem; margin-top: 1.5rem; }
 .resource-group + .resource-group { margin-top: 2.5rem; }
 .resource-group h3 { margin: 0 0 .85rem; font-size: 1.4rem; }

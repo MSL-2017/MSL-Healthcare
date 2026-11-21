@@ -1,4 +1,4 @@
-html{scroll-padding-top:112px}
+html{scroll-padding-block-start:var(--mast-clearance,max(112px,7rem))}
 
 @media (prefers-reduced-motion: no-preference) {
   .route-page > :first-child:not(.enquiryShell),
@@ -51,7 +51,7 @@ summary:focus-visible{outline:3px solid #bc7500;outline-offset:4px}
 .footerLinks{grid-template-columns:1.4fr repeat(3,1fr)}.footerLinks a,.footerLinks address{display:block;color:#e2edf5;font-style:normal}.footerLogo{background:white;border-radius:8px;padding:9px 12px;width:fit-content;margin-bottom:18px}.footerLinks strong{display:block;margin-bottom:10px}.fine{display:flex;flex-wrap:wrap;gap:18px;padding-top:20px;margin-top:32px;border-top:1px solid #ffffff40;font-size:.88rem}
 .innerHero{padding-block:clamp(42px,6vw,90px)}.innerHero .lead{max-width:660px}
 .enquiryLayout{display:grid;grid-template-columns:.83fr 1.17fr;align-items:start;gap:8%;padding-block:clamp(36px,5vw,78px)}
-.contactIntro{position:sticky;top:125px}.contactIntro .lead{line-height:1.55}
+.contactIntro{position:sticky;top:max(125px,var(--mast-clearance,112px))}.contactIntro .lead{line-height:1.55}
 .contactDetails{padding-block:18px;border-block:1px solid #bdd3e0}.contactDetails h2{font-size:1.25rem;letter-spacing:-.02em}.contactDetails a,.contactLinks a{display:block;width:fit-content}.contactDetails a:first-of-type{font-size:1.55rem;font-weight:650;color:var(--blue)}.contactDetails address{font-style:normal;margin-top:.7rem}.contactLinks{margin-top:18px}
 .enquiry{padding:clamp(20px,3vw,42px);background:#ffffffed}.enquiry h2{font-size:2rem}.enquiry label{display:grid;gap:5px;font-weight:600;margin:15px 0}.enquiry input,.enquiry textarea,.enquiry select{border:1px solid #93acbc;padding:10px;border-radius:7px;background:white;width:100%;font:inherit;min-width:0}.enquiry textarea{resize:vertical}.enquiry :is(input,textarea,select):focus-visible{outline:3px solid #1477a8;outline-offset:1px}.formRow{grid-template-columns:1fr 1fr;gap:14px}.formRow label{margin:0}.enquiry .check{display:flex;align-items:baseline;gap:10px}.check input{width:18px;accent-color:var(--blue)}.note,.draft{border-left:3px solid #538da8;background:#e9f4fa;padding:13px 17px}.draft{margin-top:20px}.draft .actions{margin-top:12px}
 @media(min-width:941px) and (prefers-reduced-motion:no-preference){@supports(animation-timeline:view()){.portrait img{animation:drift linear both;animation-timeline:view();animation-range:entry 50% exit 100%}@keyframes drift{from{object-position:65% 48%}to{object-position:65% 57%}}}}

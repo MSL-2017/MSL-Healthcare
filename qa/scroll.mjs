@@ -96,6 +96,38 @@ export async function verifyScroll(page, base) {
   console.log("CTA, anchor offset, and Back/Forward scroll restoration verified");
 }
 
+export async function verifyStickyClearance(page, base) {
+  for (const width of [1440, 768, 390]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto(base + "/candidate-compliance");
+    await page.waitForFunction(() => document.documentElement.style.getPropertyValue("--mast-clearance"));
+    await page.evaluate(() => { document.documentElement.style.fontSize = "24px"; });
+    await page.waitForFunction(() =>
+      parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) >=
+      document.querySelector(".mast").getBoundingClientRect().height + 11);
+    await page.getByRole("link", { name: "Document checklist" }).click();
+    await page.waitForURL("**#checklist");
+    const anchor = await page.locator("#checklist").boundingBox();
+    const header = await page.locator(".mast").boundingBox();
+    assert.ok(anchor && header && anchor.y >= header.y + header.height, `Expanded navbar overlaps anchor at ${width}px`);
+
+    await page.goto(base);
+    await page.waitForFunction(() => document.documentElement.style.getPropertyValue("--mast-clearance"));
+    await page.keyboard.press("Tab");
+    const cta = page.locator(".audiences").getByRole("link", { name: "Register with MSL" });
+    await cta.evaluate(element => {
+      window.scrollTo(0, window.scrollY + element.getBoundingClientRect().top - 38);
+    });
+    const obscured = await cta.boundingBox();
+    assert.ok(obscured && obscured.y < (await page.locator(".mast").boundingBox()).height);
+    await cta.evaluate(element => element.focus({ preventScroll: true }));
+    await cta.evaluate(element => new Promise(resolve => requestAnimationFrame(() => requestAnimationFrame(resolve))));
+    const revealed = await cta.boundingBox();
+    assert.ok(revealed && revealed.y >= (await page.locator(".mast").boundingBox()).height, `Keyboard focus obstructed at ${width}px`);
+    console.log(`${width}px verified: enlarged navbar clears anchor targets and keyboard-focused controls.`);
+  }
+}
+
 export async function verifyMobileMenu(page, base, routes, output) {
   const menu = page.locator(".smallNav");
   const toggle = menu.locator(":scope > summary");

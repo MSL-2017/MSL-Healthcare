@@ -12,7 +12,7 @@ const sectors=[
 export default function Home(){
  return <>
  <section className="hero homeHero"><div className="wrap heroGrid"><div className="intro"><p className="overline">UK healthcare recruitment</p>
- <h1>Healthcare staffing,<br/><em>built around people.</em></h1>
+ <h1>Healthcare staffing, <em>built around people.</em></h1>
  <p className="lead">Connecting healthcare professionals with NHS and private care providers, from individual shifts to longer placements.</p>
  <div className="actions"><Link className="btn" href="/healthcare-jobs">Find work</Link><Link className="btn outline" href="/request-staff">Request staff</Link></div>
  </div><HeroCarousel/></div></section>

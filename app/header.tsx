@@ -15,14 +15,43 @@ export default function Header() {
     });
   }
   useEffect(() => {
+    const mastElement = header.current;
+    if (!mastElement) return;
+    const mast = mastElement;
+    const root = document.documentElement;
+    function updateClearance() {
+      root.style.setProperty("--mast-clearance", `${Math.max(112, Math.ceil(mast.getBoundingClientRect().height) + 12)}px`);
+    }
+    updateClearance();
+    const observer = new ResizeObserver(updateClearance);
+    observer.observe(mast);
+
+    let focusFrame = 0;
+    function revealFocusedControl(event: FocusEvent) {
+      const target = event.target;
+      if (!(target instanceof HTMLElement) || mast.contains(target)) return;
+      cancelAnimationFrame(focusFrame);
+      focusFrame = requestAnimationFrame(() => {
+        if (document.activeElement !== target || !target.matches(":focus-visible")) return;
+        const bounds = target.getBoundingClientRect();
+        if (bounds.bottom > 0 && bounds.top < mast.getBoundingClientRect().bottom) {
+          target.scrollIntoView({ block: "start", inline: "nearest" });
+        }
+      });
+    }
     function closeOutside(event: PointerEvent) {
       if (event.target instanceof Node && !header.current?.contains(event.target)) closeMenus();
     }
     document.addEventListener("pointerdown", closeOutside);
+    document.addEventListener("focusin", revealFocusedControl);
     window.addEventListener("popstate", closeMenus);
     return () => {
       document.removeEventListener("pointerdown", closeOutside);
+      document.removeEventListener("focusin", revealFocusedControl);
       window.removeEventListener("popstate", closeMenus);
+      cancelAnimationFrame(focusFrame);
+      observer.disconnect();
+      root.style.removeProperty("--mast-clearance");
     };
   }, []);
   return <header className="mast" ref={header} onBlur={event=>{if(!event.currentTarget.contains(event.relatedTarget))closeMenus()}} onKeyDown={event=>{
