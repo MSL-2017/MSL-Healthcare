@@ -21,6 +21,7 @@ try {
   const nextImage = previous => page.waitForFunction(src =>
     document.querySelector('.heroSlide[data-active="true"]')?.getAttribute("src") !== src, previous);
   assert.equal(await hero.locator("img").count(), 3);
+  assert.equal(await page.locator(".heroCarousel button").count(), 0);
   await page.locator(".heroGrid").evaluate(element => Promise.all(element.getAnimations().map(animation => animation.finished)));
   const bounds = await hero.boundingBox();
   const images = [await currentImage()];
@@ -51,20 +52,11 @@ try {
     document.dispatchEvent(new Event("visibilitychange"));
   });
   await nextImage(images[0]);
-  await page.getByRole("button", { name: "Pause hero slideshow" }).click();
-  const paused = await currentImage();
-  await page.mouse.move(0, 0);
-  await page.waitForTimeout(2200);
-  assert.equal(await currentImage(), paused);
-  await page.getByRole("button", { name: "Play hero slideshow" }).click();
-  await page.mouse.move(0, 0);
-  await nextImage(paused);
 
   await page.emulateMedia({ reducedMotion: "reduce" });
   await page.reload();
   await page.waitForTimeout(2200);
   assert.equal(await currentImage(), images[0]);
-  assert.equal(await page.getByRole("button", { name: "Pause hero slideshow" }).count(), 0);
 
   const photos = page.locator(".heroSlides img, .audiences img, .serviceGallery img");
   const sources = await photos.evaluateAll(nodes => nodes.map(node => {
@@ -114,7 +106,7 @@ try {
     console.log(width, "hero, header and image alignment verified");
   }
   assert.deepEqual(errors, []);
-  console.log("PASS: 3-slide loop, 2s cadence, crossfade, no carousel layout shift, hover, visibility, pause, reduced motion and unique photos.");
+  console.log("PASS: 3-slide loop, 2s cadence, crossfade, no buttons, no carousel layout shift, hover, visibility, reduced motion and unique photos.");
 } finally {
   await browser.close();
 }

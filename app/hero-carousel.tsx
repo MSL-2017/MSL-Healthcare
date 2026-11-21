@@ -14,7 +14,6 @@ export default function HeroCarousel() {
   const [active, setActive] = useState(0);
   const [ready, setReady] = useState<string[]>([]);
   const [hovered, setHovered] = useState(false);
-  const [paused, setPaused] = useState(false);
   const [motionAllowed, setMotionAllowed] = useState(false);
   const [visible, setVisible] = useState(false);
   const next = (active + 1) % slides.length;
@@ -35,10 +34,10 @@ export default function HeroCarousel() {
   }, []);
 
   useEffect(() => {
-    if (!motionAllowed || !visible || hovered || paused || !nextReady) return;
+    if (!motionAllowed || !visible || hovered || !nextReady) return;
     const timer = window.setTimeout(() => setActive(next), interval);
     return () => window.clearTimeout(timer);
-  }, [hovered, motionAllowed, next, nextReady, paused, visible]);
+  }, [hovered, motionAllowed, next, nextReady, visible]);
 
   return (
     <figure
@@ -63,17 +62,6 @@ export default function HeroCarousel() {
         ))}
       </div>
       <figcaption><b>24/7</b> Consultant support</figcaption>
-      {motionAllowed && (
-        <button
-          type="button"
-          className="heroPlayback"
-          aria-label={paused ? "Play hero slideshow" : "Pause hero slideshow"}
-          title={paused ? "Play slideshow" : "Pause slideshow"}
-          onClick={() => setPaused(value => !value)}
-        >
-          <span aria-hidden="true" className={paused ? "playIcon" : "pauseIcon"}/>
-        </button>
-      )}
     </figure>
   );
 }
