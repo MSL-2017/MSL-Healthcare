@@ -25,7 +25,10 @@ try {
     assert.equal(await partners.count(), 1, route);
     assert.equal(await sourceLogos.count(), 5, route);
     assert.equal(await partners.locator("button").count(), 0, route);
-    assert.equal(await partners.evaluate(element => element.nextElementSibling?.tagName), "FOOTER", route);
+    assert.equal(await partners.evaluate((element, home) => {
+      const next = element.nextElementSibling;
+      return home && next?.classList.contains("credentials") ? next.nextElementSibling?.tagName : next?.tagName;
+    }, route === "/"), "FOOTER", route);
   }
   console.log(`Shared section is directly above the footer on all ${routes.length} routes.`);
 

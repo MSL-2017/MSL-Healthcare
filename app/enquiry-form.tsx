@@ -35,7 +35,7 @@ export default function EnquiryForm({kind,initialSpecialty=""}:{kind:Kind;initia
     <label>{kind==="staff"?"Facility location":"Preferred location"}<input name="Location" maxLength={140}/></label></div>}
     <label>{kind==="staff"?"Which shifts or roles do you need?":kind==="register"?"Your experience and availability":"How can we help?"} *<textarea name="Message" onInput={event=>event.currentTarget.setCustomValidity("")} required rows={4} maxLength={1800}/></label>
     {kind==="referral"&&<p className="note">Use your own contact details. Ask the team how to make an introduction before sharing details about someone else.</p>}
-    {kind==="register"&&<p className="note">Ask your consultant for the approved way to share your CV. Please leave identity and health documents out of this enquiry.</p>}
+    {kind==="register"&&<p className="note">Please leave identity and health documents out of this enquiry.</p>}
     <label className="check"><input type="checkbox" required name="consent"/> <span>I agree to include these details in my email to MSL Healthcare. <Link href="/privacy-policy" className="under">Privacy information</Link></span></label>
     <noscript><p>Please email info@mslhealthcare.co.uk or call 0333 733 2020 to make this enquiry.</p></noscript>
     <button type="submit" className="btn">Prepare email draft</button>

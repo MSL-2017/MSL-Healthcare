@@ -27,6 +27,14 @@ try {
      await page.locator("main h1").waitFor();
      assert.equal(await page.locator("main h1").count(),1,route);
      assert.ok(await page.locator('link[rel="canonical"]').count(),route+" canonical");
+     assert.equal(await page.locator('input[type="file"], a[href="/send-cv"]').count(),0,route);
+     assert.doesNotMatch(await page.locator("body").innerText(), /\b(?:send|submit|upload|share)\s+(?:(?:your|a)\s+)?CV\b/i,route);
+     if(route==="/for-candidates"){
+       assert.equal(await page.locator("main h1").innerText(),"Nursing Shifts on your terms.");
+       assert.deepEqual(await page.locator(".steps li").evaluateAll(steps=>steps.map(step=>[
+         getComputedStyle(step).listStyleType,getComputedStyle(step,"::before").content
+       ])),Array.from({length:3},()=>["none","counter(stage)"]));
+     }
      await page.evaluate(async()=>{for(const image of document.images){image.loading="eager"}await Promise.all(Array.from(document.images,image=>image.decode()))});
      const overflow=await page.evaluate(()=>document.documentElement.scrollWidth-innerWidth);
      assert.ok(overflow<=1,route+" overflow at "+width+": "+overflow);
@@ -47,6 +55,18 @@ try {
  }
  for(const [legacy,newPath] of [["/Candidates","/for-candidates"],["/clients","/for-clients"],["/about-us","/about"],["/send-cv","/register"],["/compliance","/candidate-compliance"]]){const r=await context.request.get(base+legacy,{maxRedirects:0});assert.equal(r.status(),308);assert.equal(new URL(r.headers().location,base).pathname,newPath)}
  for(const href of localLinks){if(!visited.has(href))assert.equal((await context.request.get(base+href)).status(),200,href)}
+ for(const [title,anchor] of [["Paediatric nurses","paediatric-nurses"],["Mental health nurses","mental-health-nurses"]]){
+   await page.goto(base);
+   const card=page.locator(".serviceGallery article").filter({has:page.getByRole("heading",{name:title,exact:true})});
+   assert.equal(await card.count(),1);
+   await card.getByRole("link").click();
+   await page.waitForURL(base+"/healthcare-specialisms#"+anchor);
+   await page.locator("#"+anchor).getByText(title,{exact:true}).waitFor();
+ }
+ await page.goto(base);
+ await page.getByRole("link",{name:"Quick apply"}).click();
+ await page.waitForURL(base+"/register");
+ assert.ok(await page.getByRole("heading",{name:"Your registration"}).isVisible());
  await page.goto(base+"/candidate-compliance");
  assert.equal(await page.getByRole("link",{name:/^Open .* PDF$/}).count(),10);
  await page.getByRole("navigation",{name:"Resource categories"}).getByRole("link",{name:"During assignments"}).click();

@@ -3,6 +3,7 @@ import Header from "./header";
 import Footer from "./footer";
 import Motion from "./motion";
 import Partners from "./partners";
+import RecCredential from "./rec-credential";
 import { origin } from "./site";
 import "./globals.css";
 import "./design.css";
@@ -14,5 +15,5 @@ export const metadata: Metadata = {
   description:"Specialist nursing recruitment for NHS and private providers across the UK."
 };
 export default function RootLayout({children}:{children:React.ReactNode}){
-  return <html lang="en-GB"><body><Header/><main id="main" tabIndex={-1}>{children}</main><Partners/><Footer/><Motion/></body></html>
+  return <html lang="en-GB"><body><Header/><main id="main" tabIndex={-1}>{children}</main><Partners/><RecCredential/><Footer/><Motion/></body></html>
 }

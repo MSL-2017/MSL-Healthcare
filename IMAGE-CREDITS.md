@@ -32,6 +32,8 @@ The staffing gallery and previous carousel assets below are covered by the [Pexe
 | `public/staffing-critical-care.webp` | ICU ventilator and patient monitoring | [Viktors Duks](https://www.pexels.com/photo/icu-patient-monitoring-in-hospital-setting-30797638/) |
 | `public/staffing-emergency-nursing.webp` | Clinical team in an emergency corridor | [RDNE Stock project](https://www.pexels.com/photo/doctors-and-nurses-in-a-hospital-6129502/) |
 | `public/staffing-general-nursing.webp` | Nurse adjusting a bedside IV drip | [RDNE Stock project](https://www.pexels.com/photo/nurse-fixing-a-patient-s-dextrose-bags-6129232/) |
+| `public/staffing-paediatric-nurses.webp` | Child's check-up with a clinician | [Gustavo Fring](https://www.pexels.com/photo/doctor-examining-a-girl-with-a-stethoscope-7447001/) |
+| `public/staffing-mental-health-nurses.webp` | A consultation in a counselling setting | [Alex Green](https://www.pexels.com/photo/attentive-female-counselor-listening-to-male-patient-5699484/) |
 
 ## Brand assets
 

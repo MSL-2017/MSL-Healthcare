@@ -9,8 +9,8 @@ export const metadata = editorialMeta(
 const groups = [
   { title: "General nursing and healthcare support", roles: ["Registered general nurses (RGNs)", "Healthcare assistants (HCAs)"] },
   { title: "Emergency, critical care and theatres", roles: ["Accident and emergency nurses (A&E)", "Intensive therapy unit nurses (ITU)", "Theatre nurses"] },
-  { title: "Children and newborns", roles: ["Paediatric nurses", "Paediatric intensive care nurses (PICU)", "Neonatal intensive care nurses (NICU)"] },
-  { title: "Mental health and advanced practice", roles: ["Mental health nurses", "Emergency nurse practitioners (ENPs)", "Advanced nurse practitioners (ANPs)"] },
+  { id: "paediatric-nurses", title: "Children and newborns", roles: ["Paediatric nurses", "Paediatric intensive care nurses (PICU)", "Neonatal intensive care nurses (NICU)"] },
+  { id: "mental-health-nurses", title: "Mental health and advanced practice", roles: ["Mental health nurses", "Emergency nurse practitioners (ENPs)", "Advanced nurse practitioners (ANPs)"] },
 ];
 
 export default function SpecialismsPage() {
@@ -22,7 +22,7 @@ export default function SpecialismsPage() {
       </EditorialIntro>
     </div></section>
     <section className="wrap section ed-groups" aria-label="Clinical disciplines">
-      {groups.map(group => <article className="ed-group" key={group.title}>
+      {groups.map(group => <article id={group.id} className="ed-group" key={group.title}>
         <h2>{group.title}</h2><ul>{group.roles.map(role => <li key={role}>{role}</li>)}</ul>
       </article>)}
     </section>

@@ -66,8 +66,8 @@ try {
     const url = new URL(node.src);
     return url.searchParams.get("url") || url.pathname;
   }));
-  assert.equal(sources.length, 8);
-  assert.equal(new Set(sources).size, 8);
+  assert.equal(sources.length, 10);
+  assert.equal(new Set(sources).size, 10);
 
   if (output) await fs.mkdir(output, { recursive: true });
   for (const width of [1440, 1024, 768, 390, 320]) {
@@ -80,6 +80,8 @@ try {
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1));
     assert.equal(await page.locator(".homeHero").getByText(/Photos: Anthony Clingerman/).count(), 0);
     assert.ok(await page.locator(".finalCTA + .homePhotoCredit").isVisible());
+    assert.equal(await page.locator(".credentials").count(), 1);
+    assert.ok(await page.locator(".partners + .credentials + footer").count());
     const heading = page.locator(".homeHero h1");
     assert.equal(await heading.textContent(), "Healthcare staffing, built around people.");
     if (width >= 1024) {

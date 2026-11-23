@@ -1,5 +1,5 @@
 export const groups = [
-  { title: 'For candidates', links: [['Candidate services','/for-candidates'],['Healthcare jobs','/healthcare-jobs'],['Register / send CV','/register'],['Candidate compliance','/candidate-compliance'],['Recommend a friend','/recommend-a-friend']] },
+  { title: 'For candidates', links: [['Candidate services','/for-candidates'],['Healthcare jobs','/healthcare-jobs'],['Register','/register'],['Candidate compliance','/candidate-compliance'],['Recommend a friend','/recommend-a-friend']] },
   { title: 'For clients', links: [['Client services','/for-clients'],['Staffing solutions','/staffing-solutions'],['Healthcare specialisms','/healthcare-specialisms'],['Request staff','/request-staff']] },
   { title: 'Company', links: [['About MSL','/about'],['Work for MSL','/work-for-msl'],['Contact','/contact']] }
 ];

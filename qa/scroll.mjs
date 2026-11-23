@@ -3,7 +3,7 @@ import path from "node:path";
 
 const journeys = [
   { source: "/", menu: 0, links: [["Candidate services", "/for-candidates"], ["Healthcare jobs", "/healthcare-jobs"]] },
-  { source: "/for-candidates", menu: 0, links: [["Register / send CV", "/register"], ["Candidate compliance", "/candidate-compliance"], ["Recommend a friend", "/recommend-a-friend"]] },
+  { source: "/for-candidates", menu: 0, links: [["Register", "/register"], ["Candidate compliance", "/candidate-compliance"], ["Recommend a friend", "/recommend-a-friend"]] },
   { source: "/", menu: 1, links: [["Client services", "/for-clients"]] },
   { source: "/for-clients", menu: 1, links: [["Staffing solutions", "/staffing-solutions"], ["Healthcare specialisms", "/healthcare-specialisms"], ["Request staff", "/request-staff"]] },
 ];

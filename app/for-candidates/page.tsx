@@ -3,12 +3,12 @@ import Image from "next/image";
 import { CandidateContact, journeyMetadata } from "./journey";
 import s from "./journey.module.css";
 
-export const metadata = journeyMetadata("For healthcare professionals", "Explore flexible nursing work, weekly payroll, clinical support and registration with MSL Healthcare.", "/for-candidates");
+export const metadata = journeyMetadata("For healthcare professionals", "Explore flexible nursing shifts, weekly payroll, clinical support and registration with MSL Healthcare.", "/for-candidates");
 
 export default function Candidates() {
   return <>
     <section className={s.hero}><div className="wrap duo">
-      <div><p className="overline">For candidates</p><h1>Nursing work on your terms.</h1>
+      <div><p className="overline">For candidates</p><h1>Nursing Shifts on your terms.</h1>
         <p className="lead">From an occasional shift close to home to a block booking further afield, tell us where and when you want to work.</p>
         <div className={s.links}><Link className="btn" href="/register">Register with MSL</Link><Link className="under" href="/healthcare-jobs">Explore healthcare jobs</Link></div>
       </div>
@@ -22,7 +22,7 @@ export default function Candidates() {
         <article><h3>Recommend a friend</h3><p>Earn £50 after your referral completes their first shift and a further £200 once they have worked 100 hours. <Link className="under" href="/recommend-a-friend">See the referral scheme</Link> before making a recommendation.</p></article>
       </div></div></section>
     <section className="agency"><div className="wrap duo"><div><p className="overline">Getting started</p><h2>From registration to your next shift</h2><p>We recruit registered healthcare professionals across disciplines including intensive care, A&amp;E and general nursing.</p><Link className="under" href="/healthcare-specialisms">View healthcare specialisms</Link></div>
-      <ol className="steps list-decimal pl-6"><li><h3>Introduce yourself</h3><p><Link className="under" href="/register">Register your interest</Link> and tell us about your experience and availability.</p></li>
+      <ol className="steps list-none pl-6"><li><h3>Introduce yourself</h3><p><Link className="under" href="/register">Register your interest</Link> and tell us about your experience and availability.</p></li>
         <li><h3>Prepare your documents</h3><p>Use the <Link className="under" href="/candidate-compliance">candidate compliance checklist</Link> to gather the documents for your registration.</p></li>
         <li><h3>Discuss suitable shifts</h3><p>Your consultant can advise on opportunities that match your specialty and preferred location.</p></li></ol>
     </div></section>
