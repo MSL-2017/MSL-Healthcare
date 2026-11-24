@@ -61,7 +61,7 @@ try {
   await page.waitForTimeout(2200);
   assert.equal(await currentImage(), images[0]);
 
-  const photos = page.locator(".heroSlides img, .audiences img, .serviceGallery img");
+  const photos = page.locator(".heroSlides img, .audiences img, .staffingSequence:not([aria-hidden]) img");
   const sources = await photos.evaluateAll(nodes => nodes.map(node => {
     const url = new URL(node.src);
     return url.searchParams.get("url") || url.pathname;
@@ -80,8 +80,9 @@ try {
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1));
     assert.equal(await page.locator(".homeHero").getByText(/Photos: Anthony Clingerman/).count(), 0);
     assert.ok(await page.locator(".finalCTA + .homePhotoCredit").isVisible());
-    assert.equal(await page.locator(".credentials").count(), 1);
-    assert.ok(await page.locator(".partners + .credentials + footer").count());
+    assert.equal(await page.locator('footer img[src*="neuven-consult"]').count(), 0);
+    assert.equal(await page.locator("footer .footerLogo img").count(), 1);
+    assert.equal(await page.locator(".partners").getByRole("img", { name: /Neuven Consult/ }).count(), 1);
     const heading = page.locator(".homeHero h1");
     assert.equal(await heading.textContent(), "Healthcare staffing, built around people.");
     if (width >= 1024) {
@@ -90,7 +91,7 @@ try {
       assert.equal(lines, 2, `Desktop hero must use two lines at ${width}px`);
     }
 
-    const measurements = await page.locator(".audiences article, .audiences .cardPhoto, .audiences .under, .serviceGallery .cardPhoto")
+    const measurements = await page.locator(".audiences article, .audiences .cardPhoto, .audiences .under, .staffingSequence:not([aria-hidden]) .cardPhoto")
       .evaluateAll(nodes => nodes.map(node => {
         const { y, width, height } = node.getBoundingClientRect();
         return { y, width, height };
@@ -120,7 +121,68 @@ try {
     console.log(width, "hero, header and image alignment verified");
   }
 
-  const touchPage = await browser.newPage({ viewport: { width: 390, height: 900 }, isMobile: true, hasTouch: true, reducedMotion: "reduce" });
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  for (const width of [1440, 768, 390]) {
+    await page.setViewportSize({ width, height: 900 });
+    await page.goto(base);
+    const gallery = page.locator(".staffingViewport");
+    const track = gallery.locator(".staffingTrack");
+    await gallery.scrollIntoViewIfNeeded();
+    assert.equal(await gallery.getByRole("link").count(), 5);
+    assert.equal(await gallery.locator('[aria-hidden="true"] a[tabindex="-1"]').count(), 5);
+    const position = () => track.evaluate(element => element.getBoundingClientRect().left);
+    const start = await position();
+    await page.waitForTimeout(300);
+    assert.ok(await position() < start - 2, `Right-to-left motion at ${width}px`);
+    const maxGap = await track.evaluate(async element => {
+      const [animation] = element.getAnimations();
+      const [first, duplicate] = element.children;
+      animation.pause();
+      await animation.ready;
+      animation.currentTime = 0;
+      const starts = Array.from(first.children, card => card.getBoundingClientRect().left);
+      animation.currentTime = animation.effect.getComputedTiming().duration - .01;
+      const ends = Array.from(duplicate.children, card => card.getBoundingClientRect().left);
+      animation.currentTime = 0;
+      animation.play();
+      return Math.max(...starts.map((left, index) => Math.abs(left - ends[index])));
+    });
+    assert.ok(maxGap < .1, `Loop seam at ${width}px`);
+    await gallery.hover();
+    assert.equal(await track.evaluate(element => getComputedStyle(element).animationPlayState), "paused");
+    await page.getByRole("button", { name: "Pause scrolling" }).focus();
+    await page.keyboard.press("Tab");
+    assert.equal(await gallery.getAttribute("data-manual"), "true");
+    assert.equal(await track.evaluate(element => getComputedStyle(element).animationName), "none");
+    await page.getByRole("button", { name: "Resume scrolling" }).click();
+    await page.mouse.move(0, 0);
+    assert.equal(await track.evaluate(element => getComputedStyle(element).animationPlayState), "running");
+  }
+
+  const touchPage = await browser.newPage({ viewport: { width: 390, height: 900 }, isMobile: true, hasTouch: true });
+  await touchPage.goto(base);
+  const mobileGallery = touchPage.locator(".staffingViewport");
+  await mobileGallery.scrollIntoViewIfNeeded();
+  const galleryBox = await mobileGallery.boundingBox();
+  const session = await touchPage.context().newCDPSession(touchPage);
+  const y = Math.round(galleryBox.y + galleryBox.height / 2);
+  const x = Math.round(galleryBox.x + galleryBox.width * .8);
+  await session.send("Input.dispatchTouchEvent", { type: "touchStart", touchPoints: [{ x, y }] });
+  await touchPage.waitForFunction(() => document.querySelector(".staffingViewport").dataset.manual === "true");
+  const touchStart = await mobileGallery.evaluate(element => element.scrollLeft);
+  for (const offset of [30, 70, 110, 150]) {
+    await session.send("Input.dispatchTouchEvent", { type: "touchMove", touchPoints: [{ x: x - offset, y }] });
+  }
+  await session.send("Input.dispatchTouchEvent", { type: "touchEnd", touchPoints: [] });
+  await touchPage.waitForFunction(start => document.querySelector(".staffingViewport").scrollLeft > start + 20, touchStart);
+  await mobileGallery.getByRole("link").last().tap();
+  await touchPage.waitForURL("**/healthcare-specialisms#mental-health-nurses");
+  await touchPage.emulateMedia({ reducedMotion: "reduce" });
+  await touchPage.goto(base);
+  assert.equal(await touchPage.getByRole("button", { name: "Pause scrolling" }).count(), 0);
+  assert.equal(await mobileGallery.locator(".staffingTrack").evaluate(element => element.getAnimations().length), 0);
+  console.log("Staffing motion, seamless loop, hover and keyboard pause, touch swipe and reduced motion verified");
+
   for (const device of [page, touchPage]) {
     const touch = device === touchPage;
     if (!touch) await device.setViewportSize({ width: 1440, height: 900 });

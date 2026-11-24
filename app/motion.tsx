@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 const targets = [
   "h1", "h2", "article", "figure", ".lead", ".actions", ".steps li",
   ".ed-photo", ".ed-rows > div", ".ed-sequence li", ".story p",
-  ".opportunity > div", ".resource-group h3",
+  ".opportunity > div",
 ].map(selector => "main " + selector).join(",");
 
 export default function Motion() {
@@ -45,7 +45,7 @@ export default function Motion() {
 
     const hero = document.querySelector(".route-page > :first-child");
     document.querySelectorAll(targets).forEach(element => {
-      if (!hero?.contains(element)) observer.observe(element);
+      if (!hero?.contains(element) && !element.closest(".staffingTrack")) observer.observe(element);
     });
     preference.addEventListener("change", stopAnimations);
     return () => {

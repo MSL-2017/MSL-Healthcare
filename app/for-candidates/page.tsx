@@ -23,7 +23,7 @@ export default function Candidates() {
       </div></div></section>
     <section className="agency"><div className="wrap duo"><div><p className="overline">Getting started</p><h2>From registration to your next shift</h2><p>We recruit registered healthcare professionals across disciplines including intensive care, A&amp;E and general nursing.</p><Link className="under" href="/healthcare-specialisms">View healthcare specialisms</Link></div>
       <ol className="steps list-none pl-6"><li><h3>Introduce yourself</h3><p><Link className="under" href="/register">Register your interest</Link> and tell us about your experience and availability.</p></li>
-        <li><h3>Prepare your documents</h3><p>Use the <Link className="under" href="/candidate-compliance">candidate compliance checklist</Link> to gather the documents for your registration.</p></li>
+        <li><h3>Review company policies</h3><p>Visit <Link className="under" href="/candidate-compliance">Candidate compliance</Link> for published policies and contact details.</p></li>
         <li><h3>Discuss suitable shifts</h3><p>Your consultant can advise on opportunities that match your specialty and preferred location.</p></li></ol>
     </div></section>
     <CandidateContact title="Talk to a consultant">Our team is available around the clock to answer questions about agency work.</CandidateContact>

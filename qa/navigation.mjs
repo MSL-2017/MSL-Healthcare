@@ -55,22 +55,29 @@ try {
  }
  for(const [legacy,newPath] of [["/Candidates","/for-candidates"],["/clients","/for-clients"],["/about-us","/about"],["/send-cv","/register"],["/compliance","/candidate-compliance"]]){const r=await context.request.get(base+legacy,{maxRedirects:0});assert.equal(r.status(),308);assert.equal(new URL(r.headers().location,base).pathname,newPath)}
  for(const href of localLinks){if(!visited.has(href))assert.equal((await context.request.get(base+href)).status(),200,href)}
- for(const [title,anchor] of [["Paediatric nurses","paediatric-nurses"],["Mental health nurses","mental-health-nurses"]]){
+ for(const [title,anchor] of [["Critical care",""],["Emergency nursing",""],["General nursing",""],["Paediatric nurses","paediatric-nurses"],["Mental health nurses","mental-health-nurses"]]){
    await page.goto(base);
-   const card=page.locator(".serviceGallery article").filter({has:page.getByRole("heading",{name:title,exact:true})});
+   await page.getByRole("button",{name:"Pause scrolling"}).click();
+   const card=page.locator(".staffingSequence:not([aria-hidden]) article").filter({has:page.getByRole("heading",{name:title,exact:true})});
    assert.equal(await card.count(),1);
    await card.getByRole("link").click();
-   await page.waitForURL(base+"/healthcare-specialisms#"+anchor);
-   await page.locator("#"+anchor).getByText(title,{exact:true}).waitFor();
+   await page.waitForURL(base+"/healthcare-specialisms"+(anchor ? "#"+anchor : ""));
+   if(anchor) await page.locator("#"+anchor).getByText(title,{exact:true}).waitFor();
  }
  await page.goto(base);
  await page.getByRole("link",{name:"Quick apply"}).click();
  await page.waitForURL(base+"/register");
  assert.ok(await page.getByRole("heading",{name:"Your registration"}).isVisible());
  await page.goto(base+"/candidate-compliance");
- assert.equal(await page.getByRole("link",{name:/^Open .* PDF$/}).count(),10);
- await page.getByRole("navigation",{name:"Resource categories"}).getByRole("link",{name:"During assignments"}).click();
- await page.waitForURL("**#assignment-resources");
+ assert.equal(await page.getByRole("link",{name:/^Open .* PDF$/}).count(),3);
+ await page.getByRole("link",{name:"View company policies"}).click();
+ await page.waitForURL("**#company-policies");
+ await page.getByRole("heading",{name:"Company Policies",exact:true}).waitFor();
+ const help=page.locator("main section").filter({has:page.getByRole("heading",{name:"Need help with compliance?"})});
+ assert.equal(await help.getByRole("link",{name:"info@mslhealthcare.co.uk"}).getAttribute("href"),"mailto:info@mslhealthcare.co.uk");
+ assert.equal(await help.getByRole("link",{name:"0333 733 2020"}).getAttribute("href"),"tel:03337332020");
+ assert.equal(await page.locator("main form").count(),0);
+ assert.equal(await page.getByText(/document checklist|forms and handbook|during assignments/i).count(),0);
  await page.goto(base+"/for-candidates");
  await page.getByRole("link",{name:"See the referral scheme"}).click();
  await page.waitForURL("**/recommend-a-friend");
