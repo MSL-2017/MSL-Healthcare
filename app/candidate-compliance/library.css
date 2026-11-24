@@ -1,29 +1,92 @@
-.resource-directory {
+.complianceHero {
   display: grid;
-  grid-template-columns: minmax(14rem,.65fr) minmax(0,1.55fr);
-  align-items: start;
-  gap: clamp(2rem,6vw,6rem);
-}
-.resource-index { position: sticky; top: max(120px, var(--mast-clearance, 112px)); }
-.resource-index nav { display: grid; gap: .65rem; margin-top: 1.5rem; }
-.resource-group + .resource-group { margin-top: 2.5rem; }
-.resource-group h3 { margin: 0 0 .85rem; font-size: 1.4rem; }
-.resource-entry {
-  display: grid;
-  grid-template-columns: minmax(0,1fr) auto;
-  gap: .65rem 1.5rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   align-items: center;
-  border-top: 1px solid #b9cfdc;
+  gap: clamp(1.5rem, 4vw, 4rem);
+}
+
+.complianceContact { margin-top: 1.5rem; }
+.complianceContact p { margin: 0 0 .4rem; font-weight: 700; }
+.complianceContact address {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .35rem 1.3rem;
+  font-style: normal;
+}
+.complianceContact a {
+  display: inline-flex;
+  align-items: center;
+  gap: .45rem;
+  text-decoration: underline;
+  text-underline-offset: .2em;
+}
+.complianceContact svg { flex: none; width: 1.15rem; height: 1.15rem; color: #9cdef4; }
+
+.compliancePortraits { width: min(100%, 36rem); justify-self: center; }
+.compliancePortraitDeck {
+  position: relative;
+  isolation: isolate;
+  aspect-ratio: 1.59;
+}
+.compliancePortraitDeck::before {
+  content: "";
+  position: absolute;
+  inset: 6% 3%;
+  background: radial-gradient(ellipse, #418eb66b, transparent 71%);
+}
+.compliancePortraitCard {
+  position: absolute;
+  width: 28%;
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  border: clamp(2px, .35vw, 5px) solid #e8f5fb;
+  border-radius: clamp(.625rem, 1.5vw, 1.2rem);
+  background: #cee4ed;
+  box-shadow: 0 .9rem 1.8rem #071b2f66;
+}
+.compliancePortraitCard img { object-fit: cover; }
+.compliancePortraitCard:nth-child(1) { left: 5%; top: 24%; rotate: -10deg; }
+.compliancePortraitCard:nth-child(2) { left: 25%; top: 8%; rotate: -5deg; z-index: 2; }
+.compliancePortraitCard:nth-child(3) { left: 47%; top: 29%; rotate: 5deg; z-index: 3; }
+.compliancePortraitCard:nth-child(4) { left: 67%; top: 13%; rotate: 10deg; }
+.compliancePortraitCredit { margin: 0; text-align: center; font-size: .75rem; line-height: 1.4; }
+.compliancePortraitCredit a { text-decoration: underline; text-underline-offset: .15em; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .compliancePortraits { animation: compliance-portraits-in .55s cubic-bezier(.2,.75,.22,1) both; }
+  @keyframes compliance-portraits-in {
+    from { opacity: 0; transform: translateY(12px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}
+
+.compliancePolicies {
+  display: grid;
+  grid-template-columns: minmax(0, .65fr) minmax(0, 1.55fr);
+  align-items: start;
+  gap: clamp(1rem, 5vw, 5rem);
+}
+.compliancePolicies h2, .compliancePolicies ul { margin: 0; }
+.compliancePolicy {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: .6rem 1.5rem;
   padding: 1rem 0;
 }
-.resource-entry h4 { font-weight: 670; }
-.resource-entry p { margin: .25rem 0 0; }
-.resource-entry a { padding: .4rem 0; }
+.compliancePolicy:first-child { padding-top: 0; }
+.compliancePolicy + .compliancePolicy { border-top: 1px solid #b9cfdc; }
+.compliancePolicy h3 { margin: 0; }
+.compliancePolicy p { margin: .25rem 0 0; }
+.compliancePolicy a { width: fit-content; padding-block: .5rem; }
+
+@media (max-width: 900px) {
+  .complianceHero { grid-template-columns: 1fr; }
+  .compliancePortraits { max-width: 30rem; }
+}
 @media (max-width: 750px) {
-  .resource-directory { grid-template-columns: 1fr; }
-  .resource-index { position: static; }
+  .compliancePolicies { grid-template-columns: 1fr; }
 }
 @media (max-width: 440px) {
-  .resource-entry { grid-template-columns: 1fr; }
-  .resource-entry a { width: fit-content; }
+  .compliancePolicy { grid-template-columns: 1fr; }
 }

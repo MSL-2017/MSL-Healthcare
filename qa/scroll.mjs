@@ -105,7 +105,7 @@ export async function verifyStickyClearance(page, base) {
     await page.waitForFunction(() =>
       parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) >=
       document.querySelector(".mast").getBoundingClientRect().height + 11);
-    await page.getByRole("link", { name: "Document checklist" }).click();
+    await page.evaluate(() => { window.location.hash = "checklist"; });
     await page.waitForURL("**#checklist");
     const anchor = await page.locator("#checklist").boundingBox();
     const header = await page.locator(".mast").boundingBox();

@@ -35,6 +35,17 @@ The staffing gallery and previous carousel assets below are covered by the [Pexe
 | `public/staffing-paediatric-nurses.webp` | Child's check-up with a clinician | [Gustavo Fring](https://www.pexels.com/photo/doctor-examining-a-girl-with-a-stethoscope-7447001/) |
 | `public/staffing-mental-health-nurses.webp` | A consultation in a counselling setting | [Alex Green](https://www.pexels.com/photo/attentive-female-counselor-listening-to-male-patient-5699484/) |
 
+### Candidate Compliance portraits
+
+The portraits illustrate UK clinical work and training. The first three were taken for DFID’s *Medics Behind the Mask* series. The fourth depicts NHS primary care in the UK. The photographs have been cropped and converted to WebP. The primary care photograph has also been colour-adjusted and is distributed under the same licence as its original.
+
+| Local file | Photographer and source | Licence |
+| --- | --- | --- |
+| `public/compliance-portraits/nurse.webp` | [Simon Davis/DFID — Nurse Donna Wood in her scrubs](https://commons.wikimedia.org/wiki/File:Nurse_Donna_Wood_in_her_scrubs_(15652841530).jpg) | [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/) |
+| `public/compliance-portraits/doctor.webp` | [Simon Davis/DFID — Mohamed Koker in his scrubs](https://commons.wikimedia.org/wiki/File:Mohamed_Koker_in_his_scrubs_(15651810869).jpg) | [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/) |
+| `public/compliance-portraits/consultant.webp` | [Simon Davis/DFID — Roger Alcock, doctor and NHS volunteer](https://commons.wikimedia.org/wiki/File:Roger_Alcock,_Doctor_and_NHS_Ebola_volunteer_(15837573835).jpg) | [CC BY 2.0](https://creativecommons.org/licenses/by/2.0/) |
+| `public/compliance-portraits/primary-care.webp` | [Whispyhistory — Nurse in PPE in primary care](https://commons.wikimedia.org/wiki/File:Nurse_in_PPE,_in_primary_care_during_the_COVID-19_pandemic.jpg) | [CC BY-SA 4.0](https://creativecommons.org/licenses/by-sa/4.0/) |
+
 ## Brand assets
 
 The client supplied `MSL_Healthcare_Logo_RGB+(002)-324w.webp` for this rebuild. The blue cross and wordmark should retain the dimensions and colours of the original artwork.
