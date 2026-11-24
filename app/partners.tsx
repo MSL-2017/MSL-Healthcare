@@ -6,7 +6,6 @@ const logos = [
   { file: "nhs-wales.png", alt: "NHS Wales (GIG Cymru)" },
   { file: "nhs-workforce-alliance.png", alt: "NHS Workforce Alliance, Clinical and Healthcare Staffing Approved Supplier" },
   { file: "healthtrust-europe.jpg", alt: "HealthTrust Europe Awarded Supplier" },
-  { file: "neuven-consult.png", alt: "Neuven Consult Badge of Excellence for MSL Healthcare Limited" },
 ];
 
 function LogoSequence({ duplicate = false }: { duplicate?: boolean }) {

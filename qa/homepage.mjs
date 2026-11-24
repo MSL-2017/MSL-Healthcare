@@ -80,9 +80,8 @@ try {
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1));
     assert.equal(await page.locator(".homeHero").getByText(/Photos: Anthony Clingerman/).count(), 0);
     assert.ok(await page.locator(".finalCTA + .homePhotoCredit").isVisible());
-    assert.equal(await page.locator('footer img[src*="neuven-consult"]').count(), 0);
+    assert.equal(await page.locator('img[src*="neuven-consult"], img[alt*="Neuven"]').count(), 0);
     assert.equal(await page.locator("footer .footerLogo img").count(), 1);
-    assert.equal(await page.locator(".partners").getByRole("img", { name: /Neuven Consult/ }).count(), 1);
     const heading = page.locator(".homeHero h1");
     assert.equal(await heading.textContent(), "Healthcare staffing, built around people.");
     if (width >= 1024) {

@@ -48,7 +48,15 @@ summary:focus-visible{outline:3px solid #bc7500;outline-offset:4px}
 .why dt{font-weight:700;margin-top:12px;border-top:1px solid #ffffff48;padding-top:12px}.why dd{color:#d5eaf4}
 .process{background:#edf6fa;padding-block:50px}.steps{counter-reset:stage}.steps li{counter-increment:stage;position:relative;padding:12px 0 12px 42px;border-bottom:1px solid #beccd5}.steps li:before{content:counter(stage);position:absolute;left:0;top:12px;color:#075b88;font-weight:700}.steps a{font-weight:700;text-decoration:underline;text-underline-offset:4px}
 .finalCTA{margin-block:50px}.finalCTA .btn{background:white;color:#124563}.finalCTA .outline{background:transparent;color:white;border-color:#9cbecf}
-.footerLinks{grid-template-columns:1.4fr repeat(3,1fr)}.footerLinks a,.footerLinks address{display:block;color:#e2edf5;font-style:normal}.footerLogo{background:white;border-radius:8px;padding:9px 12px;width:fit-content;margin-bottom:18px}.footerLinks strong{display:block;margin-bottom:10px}.fine{display:flex;flex-wrap:wrap;gap:18px;padding-top:20px;margin-top:32px;border-top:1px solid #ffffff40;font-size:.88rem}
+.footerLinks{grid-template-columns:1.4fr repeat(3,1fr)}.footerLinks a,.footerLinks address{display:block;color:#e2edf5;font-style:normal}.footerLogo{background:white;border-radius:8px;padding:9px 12px;width:fit-content;margin-bottom:18px}.footerLinks strong{display:block;margin-bottom:10px}
+.fine { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 18px; padding-top: 20px; margin-top: 32px; border-top: 1px solid #ffffff40; font-size: .88rem; }
+.footerLegal { display: flex; flex-wrap: wrap; gap: inherit; }
+.footerCredits a { white-space: nowrap; }
+.footerCredits a:is(:hover, :focus-visible) { color: #fff; text-decoration: underline; text-underline-offset: 5px; }
+@media (min-width: 941px) {
+  .fine { display: grid; grid-template-columns: minmax(max-content, 1fr) auto minmax(max-content, 1fr); }
+  .footerCredits { justify-self: end; }
+}
 .innerHero{padding-block:clamp(42px,6vw,90px)}.innerHero .lead{max-width:660px}
 .enquiryLayout{display:grid;grid-template-columns:.83fr 1.17fr;align-items:start;gap:8%;padding-block:clamp(36px,5vw,78px)}
 .contactIntro{position:sticky;top:max(125px,var(--mast-clearance,112px))}.contactIntro .lead{line-height:1.55}
