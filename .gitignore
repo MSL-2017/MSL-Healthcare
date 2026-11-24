@@ -1,3 +1,14 @@
 node_modules/
 .next/
+out/
+coverage/
 *.tsbuildinfo
+.env*
+!.env.example
+.vercel/
+.npmrc
+*.pem
+*.key
+*.p12
+*.pfx
+qa/output/
