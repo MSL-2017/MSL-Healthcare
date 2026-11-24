@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { createContext, useContext, useRef, useSyncExternalStore, type ReactNode } from "react";
+import { createContext, useContext, useEffect, useRef, useSyncExternalStore, type ReactNode } from "react";
 import { readCookiePreference, saveCookiePreference, subscribeToCookiePreference, type CookieDecision } from "./cookie-preferences";
 import "./cookie-consent.css";
 
@@ -25,6 +25,17 @@ export default function CookieConsent({ children }: { children: ReactNode }) {
   const preference = useSyncExternalStore(subscribeToCookiePreference, readCookiePreference, serverPreference);
   const dialog = useRef<HTMLDialogElement>(null);
   const trigger = useRef<HTMLElement | null>(null);
+
+  useEffect(() => {
+    function openFromPolicyLink() {
+      if (location.pathname === "/cookie-policy" && location.hash === "#cookie-settings" && !dialog.current?.open) {
+        dialog.current?.showModal();
+      }
+    }
+    openFromPolicyLink();
+    window.addEventListener("hashchange", openFromPolicyLink);
+    return () => window.removeEventListener("hashchange", openFromPolicyLink);
+  }, []);
 
   function openSettings(element: HTMLElement) {
     trigger.current = element;
