@@ -105,9 +105,9 @@ export async function verifyStickyClearance(page, base) {
     await page.waitForFunction(() =>
       parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) >=
       document.querySelector(".mast").getBoundingClientRect().height + 11);
-    await page.getByRole("link", { name: "View company policies" }).click();
-    await page.waitForURL("**#company-policies");
-    const anchor = await page.locator("#company-policies").boundingBox();
+    await page.getByRole("link", { name: "Document checklist" }).click();
+    await page.waitForURL("**#checklist");
+    const anchor = await page.locator("#checklist").boundingBox();
     const header = await page.locator(".mast").boundingBox();
     assert.ok(anchor && header && anchor.y >= header.y + header.height, `Expanded navbar overlaps anchor at ${width}px`);
 
