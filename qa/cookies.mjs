@@ -112,8 +112,9 @@ try {
   await returnPage.getByRole("dialog", { name: "Cookie preferences" }).waitFor();
   assert.equal(await returnPage.getByRole("region", { name: "Your privacy matters" }).count(), 0);
   await checkStorage(returning, returnPage, "accept-all");
-  await open(returnPage, "/cookie-policy#cookie-settings");
-  await returnPage.getByRole("dialog", { name: "Cookie preferences" }).waitFor();
+  const directSettingsPage = await returning.newPage();
+  await open(directSettingsPage, "/cookie-policy#cookie-settings");
+  await directSettingsPage.getByRole("dialog", { name: "Cookie preferences" }).waitFor();
   await returning.close();
 
   await footerSettings.click();
