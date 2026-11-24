@@ -75,7 +75,9 @@ try {
  assert.equal(await complianceHero.getByRole("link",{name:"info@mslhealthcare.co.uk"}).getAttribute("href"),"mailto:info@mslhealthcare.co.uk");
  assert.equal(await complianceHero.getByRole("link",{name:"0333 733 2020"}).getAttribute("href"),"tel:+443337332020");
  assert.equal(await complianceHero.getByRole("link",{name:/document checklist|forms and handbook/i}).count(),0);
- assert.equal(await complianceHero.locator(".compliancePortraitCard img").count(),4);
+ assert.equal(await complianceHero.getByRole("img",{name:"A nurse and a recruitment professional reviewing a tablet together"}).getAttribute("src"),"/compliance-consultation.jpeg");
+ assert.equal(await complianceHero.locator("img").count(),1);
+ assert.equal(await complianceHero.getByText(/illustrative photography|Simon Davis\/DFID/i).count(),0);
  assert.equal(await page.locator("#checklist article").count(),3);
  const companyPolicies=page.getByRole("region",{name:"Company Policies"});
  assert.equal(await companyPolicies.getByRole("link",{name:/^Open .* PDF$/}).count(),3);

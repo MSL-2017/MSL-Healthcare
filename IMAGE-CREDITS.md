@@ -35,7 +35,11 @@ The staffing gallery and previous carousel assets below are covered by the [Pexe
 | `public/staffing-paediatric-nurses.webp` | Child's check-up with a clinician | [Gustavo Fring](https://www.pexels.com/photo/doctor-examining-a-girl-with-a-stethoscope-7447001/) |
 | `public/staffing-mental-health-nurses.webp` | A consultation in a counselling setting | [Alex Green](https://www.pexels.com/photo/attentive-female-counselor-listening-to-male-patient-5699484/) |
 
-### Candidate Compliance portraits
+### Candidate Compliance hero
+
+The current hero uses the client-supplied `public/compliance-consultation.jpeg`. The site serves the supplied JPEG and frames it with CSS.
+
+### Retired Candidate Compliance portraits
 
 The portraits illustrate UK clinical work and training. The first three were taken for DFID’s *Medics Behind the Mask* series. The fourth depicts NHS primary care in the UK. The photographs have been cropped and converted to WebP. The primary care photograph has also been colour-adjusted and is distributed under the same licence as its original.
 

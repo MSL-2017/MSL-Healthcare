@@ -1,6 +1,6 @@
+import Image from "next/image";
 import { CandidateContact, journeyMetadata } from "../for-candidates/journey";
 import s from "../for-candidates/journey.module.css";
-import CompliancePortraits from "./portraits";
 import { policies } from "./resources";
 import "./library.css";
 
@@ -42,7 +42,16 @@ export default function Compliance() {
             </address>
           </div>
         </div>
-        <CompliancePortraits />
+        <div className="complianceHeroPhoto">
+          <Image
+            src="/compliance-consultation.jpeg"
+            alt="A nurse and a recruitment professional reviewing a tablet together"
+            fill
+            unoptimized
+            loading="eager"
+            fetchPriority="high"
+          />
+        </div>
       </div>
     </section>
     <section id="checklist" className="wrap section"><p className="overline">Before you start</p><h2>Your compliance checklist</h2>

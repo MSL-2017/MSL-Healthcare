@@ -78,7 +78,7 @@ try {
       document.querySelector(".mast .bar").getBoundingClientRect().bottom);
     assert.equal(overlaps, false);
     assert.ok(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth + 1));
-    assert.equal(await page.locator(".homeHero").getByText(/Photos: Anthony Clingerman/).count(), 0);
+    assert.equal(await page.getByText(/Photos: Anthony Clingerman/).count(), 0);
     assert.ok(await page.locator(".finalCTA + .homePhotoCredit").isVisible());
     assert.equal(await page.locator('img[src*="neuven-consult"], img[alt*="Neuven"]').count(), 0);
     assert.equal(await page.locator("footer .footerLogo img").count(), 1);

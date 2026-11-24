@@ -22,39 +22,21 @@
 }
 .complianceContact svg { flex: none; width: 1.15rem; height: 1.15rem; color: #9cdef4; }
 
-.compliancePortraits { width: min(100%, 36rem); justify-self: center; }
-.compliancePortraitDeck {
+.complianceHeroPhoto {
   position: relative;
-  isolation: isolate;
-  aspect-ratio: 1.59;
-}
-.compliancePortraitDeck::before {
-  content: "";
-  position: absolute;
-  inset: 6% 3%;
-  background: radial-gradient(ellipse, #418eb66b, transparent 71%);
-}
-.compliancePortraitCard {
-  position: absolute;
-  width: 28%;
-  aspect-ratio: 3 / 4;
+  width: 100%;
+  justify-self: center;
+  aspect-ratio: 1.48;
   overflow: hidden;
-  border: clamp(2px, .35vw, 5px) solid #e8f5fb;
-  border-radius: clamp(.625rem, 1.5vw, 1.2rem);
-  background: #cee4ed;
-  box-shadow: 0 .9rem 1.8rem #071b2f66;
+  border-radius: clamp(3rem, 7vw, 7rem) 1rem;
+  background: #204864;
+  box-shadow: 0 .9rem 2rem #071b2f59;
 }
-.compliancePortraitCard img { object-fit: cover; }
-.compliancePortraitCard:nth-child(1) { left: 5%; top: 24%; rotate: -10deg; }
-.compliancePortraitCard:nth-child(2) { left: 25%; top: 8%; rotate: -5deg; z-index: 2; }
-.compliancePortraitCard:nth-child(3) { left: 47%; top: 29%; rotate: 5deg; z-index: 3; }
-.compliancePortraitCard:nth-child(4) { left: 67%; top: 13%; rotate: 10deg; }
-.compliancePortraitCredit { margin: 0; text-align: center; font-size: .75rem; line-height: 1.4; }
-.compliancePortraitCredit a { text-decoration: underline; text-underline-offset: .15em; }
+.complianceHeroPhoto img { object-fit: cover; object-position: right center; }
 
 @media (prefers-reduced-motion: no-preference) {
-  .compliancePortraits { animation: compliance-portraits-in .55s cubic-bezier(.2,.75,.22,1) both; }
-  @keyframes compliance-portraits-in {
+  .complianceHeroPhoto { animation: compliance-photo-in .55s cubic-bezier(.2,.75,.22,1) both; }
+  @keyframes compliance-photo-in {
     from { opacity: 0; transform: translateY(12px); }
     to { opacity: 1; transform: translateY(0); }
   }
@@ -82,7 +64,7 @@
 
 @media (max-width: 900px) {
   .complianceHero { grid-template-columns: 1fr; }
-  .compliancePortraits { max-width: 30rem; }
+  .complianceHeroPhoto { max-width: 36rem; aspect-ratio: 1.6; }
 }
 @media (max-width: 750px) {
   .compliancePolicies { grid-template-columns: 1fr; }
