@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Header from "./header";
+import CookieConsent from "./cookie-consent";
 import Footer from "./footer";
 import Motion from "./motion";
 import Partners from "./partners";
@@ -15,5 +16,5 @@ export const metadata: Metadata = {
   description:"Specialist nursing recruitment for NHS and private providers across the UK."
 };
 export default function RootLayout({children}:{children:React.ReactNode}){
-  return <html lang="en-GB"><body><Header/><main id="main" tabIndex={-1}>{children}</main><Partners/><RecCredential/><Footer/><Motion/></body></html>
+  return <html lang="en-GB"><body><CookieConsent><Header/><main id="main" tabIndex={-1}>{children}</main><Partners/><RecCredential/><Footer/><Motion/></CookieConsent></body></html>
 }

@@ -8,7 +8,8 @@
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
-    "test:site": "node qa/navigation.mjs"
+    "test:site": "node qa/navigation.mjs",
+    "test:cookies": "node qa/cookies.mjs"
   },
   "dependencies": {
     "next": "^16.0.0",

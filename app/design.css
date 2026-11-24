@@ -54,7 +54,7 @@ summary:focus-visible{outline:3px solid #bc7500;outline-offset:4px}
 .footerCredits a { white-space: nowrap; }
 .footerCredits a:is(:hover, :focus-visible) { color: #fff; text-decoration: underline; text-underline-offset: 5px; }
 @media (min-width: 941px) {
-  .fine { display: grid; grid-template-columns: minmax(max-content, 1fr) auto minmax(max-content, 1fr); }
+  .fine { display: grid; grid-template-columns: minmax(max-content, 1fr) minmax(0, max-content) minmax(max-content, 1fr); }
   .footerCredits { justify-self: end; }
 }
 .innerHero{padding-block:clamp(42px,6vw,90px)}.innerHero .lead{max-width:660px}

@@ -1,0 +1,71 @@
+.cookieBanner,
+.cookieDialog {
+  color: #0b2c48;
+  border: 1px solid #bfd6e3;
+  border-radius: 1.125rem;
+  background: #f8fcfeef;
+  box-shadow: 0 .75rem 2.25rem #0b2c4826;
+  backdrop-filter: blur(16px);
+}
+
+.cookieBanner {
+  position: fixed;
+  z-index: 30;
+  inset-inline: 0;
+  bottom: max(.75rem, env(safe-area-inset-bottom));
+  width: min(94%, 60rem);
+  max-height: 60dvh;
+  overflow: auto;
+  overscroll-behavior: contain;
+  margin-inline: auto;
+  padding: clamp(.9rem, 2.2vw, 1.4rem);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: .75rem 1.4rem;
+}
+
+.cookieBanner h2, .cookieDialog h2 {
+  margin: 0 0 .25rem;
+  max-width: none;
+  font-size: clamp(1.15rem, 2.5vw, 1.5rem);
+  letter-spacing: -.025em;
+}
+
+.cookieBanner p, .cookieDialog p { margin: 0; font-size: .9rem; }
+.cookieBanner p + p { margin-top: .3rem; }
+.cookieActions { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .4rem .55rem; }
+.cookieActions .btn { padding: .55rem .7rem; cursor: pointer; }
+.cookieActions .btn:hover { background: #e2f0f7; color: #0b2c48; }
+.cookieManage { grid-column: 1 / -1; justify-self: center; padding-block: .3rem; }
+.cookieManage, .cookieDialogHeading button { background: transparent; cursor: pointer; }
+
+.cookieDialog {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  width: min(92vw, 30rem);
+  max-height: 85dvh;
+  overflow: auto;
+  padding: clamp(1rem, 4vw, 1.5rem);
+}
+.cookieDialog::backdrop { background: #0b2c4866; }
+.cookieDialogHeading { display: flex; align-items: baseline; justify-content: space-between; gap: .75rem; }
+.cookieDialogHeading button { padding-block: .25rem; }
+.cookieCategory { margin: 1rem 0; padding: .85rem; border-radius: .65rem; background: #e7f2f8; }
+.cookieCategory h3 { margin: 0 0 .15rem; font-size: 1rem; }
+.cookieInventory { margin-block: 0 1.5rem; }
+.cookieInventory dt { margin-top: .5rem; font-weight: 700; }
+
+@media (max-width: 680px) {
+  .cookieBanner { grid-template-columns: 1fr; }
+  .cookieBanner .cookieActions { width: min(100%, 22rem); }
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .cookieBanner, .cookieDialog[open] { animation: cookie-enter 220ms ease-out both; }
+  @keyframes cookie-enter {
+    from { opacity: 0; transform: translateY(.4rem); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+}

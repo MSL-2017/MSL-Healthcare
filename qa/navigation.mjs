@@ -24,6 +24,7 @@ try {
    for(const route of routes){
      const response=await page.goto(base+route);
      assert.equal(response.status(),200,route);
+     if(!visited.size) await page.getByRole("region",{name:"Your privacy matters"}).getByRole("button",{name:"Reject all"}).click();
      await page.locator("main h1").waitFor();
      assert.equal(await page.locator("main h1").count(),1,route);
      assert.ok(await page.locator('link[rel="canonical"]').count(),route+" canonical");

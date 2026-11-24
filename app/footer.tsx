@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Logo } from "./header";
+import { CookieSettingsLink } from "./cookie-consent";
 import {groups,legal} from "./site";
 
 export default function Footer(){
@@ -9,6 +10,7 @@ export default function Footer(){
     <span>© {new Date().getFullYear()} MSL Healthcare</span>
     <nav className="footerLegal" aria-label="Legal">
       {legal.map(([label,path])=><Link key={path} href={path}>{label}</Link>)}
+      <CookieSettingsLink />
     </nav>
     <span className="footerCredits">
       Designed and developed by{" "}

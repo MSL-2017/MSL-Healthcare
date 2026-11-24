@@ -14,6 +14,7 @@ try {
   page.on("pageerror", error => errors.push(error.message));
   page.on("console", message => { if (message.type() === "error") errors.push(message.text()); });
   await page.goto(base);
+  await page.getByRole("region", { name: "Your privacy matters" }).getByRole("button", { name: "Reject all" }).click();
 
   const hero = page.locator(".heroSlides");
   const slidePaths = await hero.locator("img").evaluateAll(nodes =>
@@ -160,6 +161,7 @@ try {
 
   const touchPage = await browser.newPage({ viewport: { width: 390, height: 900 }, isMobile: true, hasTouch: true });
   await touchPage.goto(base);
+  await touchPage.getByRole("region", { name: "Your privacy matters" }).getByRole("button", { name: "Reject all" }).click();
   const mobileGallery = touchPage.locator(".staffingViewport");
   await mobileGallery.scrollIntoViewIfNeeded();
   const galleryBox = await mobileGallery.boundingBox();

@@ -27,6 +27,7 @@ try {
 
   for (const route of routes) {
     assert.equal((await page.goto(base + route, { waitUntil: "domcontentloaded" })).status(), 200, route);
+    if (route === routes[0]) await page.getByRole("region", { name: "Your privacy matters" }).getByRole("button", { name: "Reject all" }).click();
     assert.equal(await partners.count(), 1, route);
     assert.equal(await sourceLogos.count(), expectedLogos.length, route);
     assert.equal(await page.locator('img[src*="neuven-consult"], img[alt*="Neuven"]').count(), 0, route);

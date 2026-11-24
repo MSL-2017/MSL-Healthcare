@@ -135,6 +135,7 @@ export async function verifyMobileMenu(page, base, routes, output) {
   const candidates = panel.getByText("For candidates", { exact: true });
   const clients = panel.getByText("For clients", { exact: true });
   await page.goto(base);
+  await page.getByRole("region", { name: "Your privacy matters" }).getByRole("button", { name: "Reject all" }).click();
   const quickApply = page.locator(".mast .quick");
   assert.equal(await quickApply.evaluate(link => {
     const range = document.createRange();
